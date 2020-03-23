@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es2015",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "lib": ["esnext"],
+    "strict": true,
+    "sourceRoot": "./src",
+    "rootDir": "./src",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "types": ["@types/jest"]
+  },
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/*.mock.ts"
+  ]
+}

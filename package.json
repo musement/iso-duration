@@ -1,0 +1,56 @@
+{
+  "name": "iso-humanize-duration",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "clean_dist": "rimraf dist/*",
+    "prebuild": "npm run clean_dist",
+    "build": "rollup --config ./build/rollup.config.ts",
+    "watch": "rollup --config ./build/rollup.config.ts --watch",
+    "typeCheck": "tsc --noEmit",
+    "lint": "tsc --noEmit && eslint . --ext .ts,.js",
+    "prerelease": "npm run build && git add dist/",
+    "release": "standard-version --commit-all"
+  },
+  "author": "Przemysław Fałowski",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/jest": "^25.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.1.0",
+    "rollup-plugin-typescript2": "^0.26.0",
+    "standard-version": "^7.1.0",
+    "ts-jest": "^25.2.1",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm run typeCheck && npm run test"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
