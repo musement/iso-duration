@@ -74,7 +74,10 @@ const normalizeDurationObj = (partialDurationObj) => {
 const config = {
     locales: {},
     setLocales(locales) {
-        this.locales = locales;
+        this.locales = {
+            ...this.locales,
+            ...locales
+        };
     },
     getLangConfig(lang) {
         const localesConfig = this.locales[lang];

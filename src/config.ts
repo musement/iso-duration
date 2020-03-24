@@ -10,7 +10,10 @@ interface Config {
 const config: Config = {
   locales: {},
   setLocales(locales) {
-    this.locales = locales;
+    this.locales = {
+      ...this.locales,
+      ...locales
+    };
   },
   getLangConfig(lang) {
     const localesConfig = this.locales[lang];
