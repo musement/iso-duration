@@ -1,3 +1,7 @@
 /// <reference types="@types/jest" />
-declare const _default: jest.Mock<any, any>;
-export default _default;
+declare const config: {
+    locales: {};
+    setLocales: jest.Mock<any, any>;
+    getLangConfig: jest.Mock<any, any>;
+};
+export default config;
