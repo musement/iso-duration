@@ -1,5 +1,5 @@
 {
-  "name": "iso-humanize-duration",
+  "name": "iso-duration",
   "version": "0.0.1",
   "description": "",
   "main": "./dist/index.cjs.js",
@@ -9,14 +9,17 @@
     "test": "jest",
     "clean_dist": "rimraf dist/*",
     "prebuild": "npm run clean_dist",
-    "build": "rollup --config ./build/rollup.config.ts",
-    "watch": "rollup --config ./build/rollup.config.ts --watch",
+    "build": "rollup --config build/rollup.config.js",
+    "watch": "rollup --config build/rollup.config.js --watch",
     "typeCheck": "tsc --noEmit",
     "lint": "tsc --noEmit && eslint . --ext .ts,.js",
     "prerelease": "npm run build && git add dist/",
     "release": "standard-version --commit-all"
   },
-  "author": "Przemysław Fałowski",
+  "author": "Musement",
+  "contributors": [
+    "Przemysław Fałowski <przemyslaw.falowski@musement.com>"
+  ],
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -34,6 +37,7 @@
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.1.0",
+    "rollup-plugin-analyzer": "^3.2.2",
     "rollup-plugin-typescript2": "^0.26.0",
     "standard-version": "^7.1.0",
     "ts-jest": "^25.2.1",

@@ -1,2 +1,18 @@
-export * from "./moduleMultiply";
-export * from "./moduleAdd";
+import { DurationObj, Locales } from "./types";
+import { normalizeDurationObj, parseIsoString } from "./helpers/utils";
+import config from "./config";
+import { IsoDuration } from "./IsoDuration/IsoDuration";
+
+function isoDuration(duration: string | Partial<DurationObj>): IsoDuration {
+  if (typeof duration === "string") {
+    return new IsoDuration(parseIsoString(duration));
+  }
+  return new IsoDuration(normalizeDurationObj(duration));
+}
+
+isoDuration.setLocales = function(obj: Locales): void {
+  config.setLocales(obj);
+};
+
+export { isoDuration };
+export * from "./locales";

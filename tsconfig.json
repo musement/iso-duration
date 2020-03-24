@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "target": "es2015",
+    "target": "esnext",
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "strict": true,
     "sourceRoot": "./src",
     "rootDir": "./src",

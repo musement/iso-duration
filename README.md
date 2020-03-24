@@ -23,3 +23,20 @@ npm run release -- --first-release
 * lint-staged (run specific command only against implemented changes)
 * standard-version (create releases and CHANGELOG.md basing on commit messages)
 
+#### Docs:
+
+```
+import isoDuration from "iso-humanize-duration";
+
+isoDuration.locale('')
+
+isoDuration('P1Y2M4DT20H44M12.67S').parse();
+isoDuration('P1Y2M4DT20H44M12.67S').toString();
+
+isoDuration('P1Y2M4DT20H44M12.67S').humanize();
+
+
+
+
+
+```
