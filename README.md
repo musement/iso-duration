@@ -1,42 +1,123 @@
-## Rollup-ts-starter
+## Iso-duration
 
-#### How to use it:
-```
-git clone //this repo
-rm -rf .git
-git init
-git add . 
-git commit -m "chore: init"
-npm install
-npm run release -- --first-release
+#### Instalation: 
+```js
+npm i @musement/iso-duration@
 ```
 
-#### Starter config:
-* Typescript (Static types)
-* Jest (Unit tests)
-* ESLint + Prettier (Linter configuration)
-* Commitlint with conventional-commit support (Linter for git commit message )
-* Husky (git hooks): 
-  * pre-commit - lint only implemented changes code and if it's possible fix lint error
-  * commit-msg - lint commit message to fit conventional-commit pattern
-  * pre-push - type check and unit tests
-* lint-staged (run specific command only against implemented changes)
-* standard-version (create releases and CHANGELOG.md basing on commit messages)
+#### Quick start:
+```js
+// Import isoDuration and locales
+import { isoDuration, en, pl, it } from '@musement/iso-duration'
 
-#### Docs:
+// Setup locales
+//   key - string you want to use in `humanize` function
+//   value - IsoDuration i18n object.
+isoDuration.setLocales({
+  en,
+  pl,
+  it,
+})
+
+//Create duration object
+const duration = isoDuration("P8DT30M")
+// OR
+const duration = isoDuration({
+  days: 8,
+  minutes: 30
+})
+
+//Get JS duration object
+console.log(duration.parse())
+// {
+//   weeks: 0,
+//   years: 0,
+//   months: 0,
+//   days: 8,
+//   hours: 0,
+//   minutes: 30,
+//   seconds: 0
+// }
+
+//Get duration ISO string
+console.log(duration.toString())
+// P8DT30M
+
+//Humanize duration 
+console.log(duration.humanize('en'))
+// 8 days 30 minutes
+
+
+``` 
+
+#### API:
+Duration object supports:
+ * [ISO_8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration string (`PnYnMnDTnHnMnS`, `PnW`)
+ * JS objects:
+```js
+{
+  "weeks": Number,
+  "years": Number,
+  "months": Number,
+  "days": Number,
+  "hours": Number,
+  "minutes": Number,
+  "seconds": Number,
+}
+```
+
+Example:
+
+```js
+import { isoDuration } from '@musement/iso-duration@'
+
+const durationFromString = isoDuration("P8DT30M")
+const durationFromObj = isoDuration({
+  days: 8,
+  minutes: 30,
+})
+```
+
+### i18n
+All languages which are expected to be available in `.humanize` method needs to be loaded using `isoDuration.setLocales`
+function.Currently library provides support for languages listed under `/src/locales`
 
 ```
-import isoDuration from "iso-humanize-duration";
+import { isoDuration, en, pl, it } from '@musement/iso-duration'
 
-isoDuration.locale('')
+isoDuration.setLocales({
+  en,
+  pl,
+  it,
+  'en-GB': en,
+  'en-US': en,  
+})
+```
 
-isoDuration('P1Y2M4DT20H44M12.67S').parse();
-isoDuration('P1Y2M4DT20H44M12.67S').toString();
+### IsoDuration object:
+* `parse()` return `DurationObj` with all time periods represented as JS object
+```
+console.log(isoDuration("P8T30M").parse())
+// {
+//   weeks: 0,
+//   years: 0,
+//   months: 0,
+//   days: 8,
+//   hours: 0,
+//   minutes: 30,
+//   seconds: 0
+// }
+```
 
-isoDuration('P1Y2M4DT20H44M12.67S').humanize();
+* `toString()` returns ISO_8601 string:
+```
+console.log(isoDuration("P8T30M").parse())
+// P8T30M
+```
 
-
-
-
-
+* `humanize(lang: string)` returns duration in human readable way:
+⚠ Warning ️⚠ - used `lang` needs to be previously added to the library using `isoDuration.setLocales`
+```
+console.log(isoDuration("P8T30M").humanize('en'))
+// 8 hours 30 minutes
 ```
