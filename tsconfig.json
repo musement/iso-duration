@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "target": "esnext",
+    "target": "es5",
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "resolveJsonModule": true,
