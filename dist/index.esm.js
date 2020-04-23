@@ -1,17 +1,43 @@
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 /**
  * The pattern used for parsing ISO8601 duration (PnYnMnDTnHnMnS).
  */
 // PnYnMnDTnHnMnS || PnW
-const numbers = "\\d+(?:[\\.,]\\d+)?";
-const weekPattern = `(${numbers}W)`;
-const datePattern = `(${numbers}Y)?(${numbers}M)?(${numbers}D)?`;
-const timePattern = `T(${numbers}H)?(${numbers}M)?(${numbers}S)?`;
-const iso8601 = `^P(?:${weekPattern}|${datePattern}(?:${timePattern})?)$`;
+var numbers = "\\d+(?:[\\.,]\\d+)?";
+var weekPattern = "(" + numbers + "W)";
+var datePattern = "(" + numbers + "Y)?(" + numbers + "M)?(" + numbers + "D)?";
+var timePattern = "T(" + numbers + "H)?(" + numbers + "M)?(" + numbers + "S)?";
+var iso8601 = "^P(?:" + weekPattern + "|" + datePattern + "(?:" + timePattern + ")?)$";
 /**
  * The ISO8601 regex for matching / testing durations
  */
-const pattern = new RegExp(iso8601);
-const durationKeys = [
+var pattern = new RegExp(iso8601);
+var durationKeys = [
     "weeks",
     "years",
     "months",
@@ -20,7 +46,7 @@ const durationKeys = [
     "minutes",
     "seconds"
 ];
-const durationUnitToIsoKey = {
+var durationUnitToIsoKey = {
     years: "Y",
     months: "M",
     days: "D",
@@ -29,7 +55,7 @@ const durationUnitToIsoKey = {
     seconds: "S",
     weeks: "W"
 };
-const durationZero = Object.freeze({
+var durationZero = Object.freeze({
     weeks: 0,
     years: 0,
     months: 0,
@@ -43,12 +69,12 @@ const durationZero = Object.freeze({
  * @param {string} durationString - PnYnMnDTnHnMnS or PnW formatted string
  * @return {Object} - With a property for each part of the pattern
  */
-const parseIsoString = (durationString) => {
-    const durationMatchedPattern = durationString.match(pattern);
+var parseIsoString = function (durationString) {
+    var durationMatchedPattern = durationString.match(pattern);
     if (!durationMatchedPattern) {
         throw new Error("Invalid duration string");
     }
-    return durationMatchedPattern.slice(1).reduce((prev, next, idx) => {
+    return durationMatchedPattern.slice(1).reduce(function (prev, next, idx) {
         prev[durationKeys[idx]] = parseFloat(next) || 0;
         return prev;
     }, {});
@@ -57,79 +83,78 @@ const parseIsoString = (durationString) => {
  * ex: { days: 1, not_supported_key: 'bar' } => { years: 0, months: 0 days: 1, hours: 0, minutes: 0, seconds: 0 }
  * @param partialDurationObj
  */
-const normalizeDurationObj = (partialDurationObj) => {
+var normalizeDurationObj = function (partialDurationObj) {
     if (Object.prototype.hasOwnProperty.call(partialDurationObj, "weeks")) {
         return Object.assign({}, durationZero, { weeks: partialDurationObj.weeks });
     }
-    return durationKeys.reduce((res, key) => ({
-        ...res,
-        [key]: partialDurationObj[key] || 0
-    }), {});
+    return durationKeys.reduce(function (res, key) {
+        var _a;
+        return (__assign(__assign({}, res), (_a = {}, _a[key] = partialDurationObj[key] || 0, _a)));
+    }, {});
 };
 
-const config = {
+var config = {
     locales: {},
-    setLocales(locales) {
-        this.locales = {
-            ...this.locales,
-            ...locales
-        };
+    setLocales: function (locales) {
+        this.locales = __assign(__assign({}, this.locales), locales);
     },
-    getLangConfig(lang) {
-        const localesConfig = this.locales[lang];
+    getLangConfig: function (lang) {
+        var localesConfig = this.locales[lang];
         if (!localesConfig) {
-            throw new Error(`isoDuration: Translations for language: ${lang} are not provided`);
+            throw new Error("isoDuration: Translations for language: " + lang + " are not provided");
         }
         return localesConfig;
     }
 };
 
-const getIsoDateElements = (durationObj) => {
-    const isoItems = ["years", "months", "days"];
-    let isoDate = "";
-    for (const item of isoItems) {
+var getIsoDateElements = function (durationObj) {
+    var isoItems = ["years", "months", "days"];
+    var isoDate = "";
+    for (var _i = 0, isoItems_1 = isoItems; _i < isoItems_1.length; _i++) {
+        var item = isoItems_1[_i];
         if (durationObj[item]) {
-            isoDate += `${durationObj[item]}${durationUnitToIsoKey[item]}`;
+            isoDate += "" + durationObj[item] + durationUnitToIsoKey[item];
         }
     }
     return isoDate;
 };
-const getIsoTimeElements = (durationObj) => {
-    const isoItems = ["hours", "minutes", "seconds"];
-    let isoDate = "";
-    for (const item of isoItems) {
+var getIsoTimeElements = function (durationObj) {
+    var isoItems = ["hours", "minutes", "seconds"];
+    var isoDate = "";
+    for (var _i = 0, isoItems_2 = isoItems; _i < isoItems_2.length; _i++) {
+        var item = isoItems_2[_i];
         if (durationObj[item]) {
-            isoDate += `${durationObj[item]}${durationUnitToIsoKey[item]}`;
+            isoDate += "" + durationObj[item] + durationUnitToIsoKey[item];
         }
     }
     return isoDate;
 };
-const durationObjToString = (durationObj) => {
+var durationObjToString = function (durationObj) {
     if (durationObj.weeks > 0) {
-        return `P${durationObj.weeks}W`;
+        return "P" + durationObj.weeks + "W";
     }
     else {
-        let durationIsoString = "P";
-        const isoDateElement = getIsoDateElements(durationObj);
+        var durationIsoString = "P";
+        var isoDateElement = getIsoDateElements(durationObj);
         if (isoDateElement) {
             durationIsoString += isoDateElement;
         }
-        const isoTimeElement = getIsoTimeElements(durationObj);
+        var isoTimeElement = getIsoTimeElements(durationObj);
         if (isoTimeElement) {
-            durationIsoString += `T${isoTimeElement}`;
+            durationIsoString += "T" + isoTimeElement;
         }
         return durationIsoString;
     }
 };
 
-const humanizeWeek = (durationObj, lang) => {
-    const localeConfig = config.getLangConfig(lang);
-    return `${durationObj.weeks} ${localeConfig.weeks(durationObj.weeks)}`;
+var humanizeWeek = function (durationObj, lang) {
+    var localeConfig = config.getLangConfig(lang);
+    return durationObj.weeks + " " + localeConfig.weeks(durationObj.weeks);
 };
-const humanizeDate = (durationObj, lang) => {
-    const localeConfig = config.getLangConfig(lang);
-    let humanizedTime = "";
-    const humanizeOrder = [
+var humanizeDate = function (durationObj, lang) {
+    var localeConfig = config.getLangConfig(lang);
+    var humanizedTime = "";
+    var humanizeOrder = [
         "years",
         "months",
         "days",
@@ -137,18 +162,18 @@ const humanizeDate = (durationObj, lang) => {
         "minutes",
         "seconds"
     ];
-    humanizeOrder.forEach((item, index) => {
-        const unitDuration = durationObj[item];
+    humanizeOrder.forEach(function (item, index) {
+        var unitDuration = durationObj[item];
         if (unitDuration) {
             if (humanizedTime !== "") {
                 humanizedTime += " ";
             }
-            humanizedTime += `${unitDuration} ${localeConfig[item](unitDuration)}`;
+            humanizedTime += unitDuration + " " + localeConfig[item](unitDuration);
         }
     });
     return humanizedTime;
 };
-const humanize = (durationObj, lang) => {
+var humanize = function (durationObj, lang) {
     if (durationObj.weeks > 0) {
         return humanizeWeek(durationObj, lang);
     }
@@ -157,20 +182,21 @@ const humanize = (durationObj, lang) => {
     }
 };
 
-class IsoDuration {
-    constructor(durationObj) {
+var IsoDuration = /** @class */ (function () {
+    function IsoDuration(durationObj) {
         this.durationObj = durationObj;
     }
-    parse() {
+    IsoDuration.prototype.parse = function () {
         return this.durationObj;
-    }
-    toString() {
+    };
+    IsoDuration.prototype.toString = function () {
         return durationObjToString(this.durationObj);
-    }
-    humanize(lang) {
+    };
+    IsoDuration.prototype.humanize = function (lang) {
         return humanize(this.durationObj, lang);
-    }
-}
+    };
+    return IsoDuration;
+}());
 
 function getArabicForm(c) {
     if (c <= 2) {
@@ -182,26 +208,26 @@ function getArabicForm(c) {
     return 0;
 }
 
-const lang = {
-    years(c) {
+var lang = {
+    years: function (c) {
         return c === 1 ? "سنة" : "سنوات";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "شهر" : "أشهر";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "أسبوع" : "أسابيع";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "يوم" : "أيام";
     },
-    hours(c) {
+    hours: function (c) {
         return c === 1 ? "ساعة" : "ساعات";
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["دقيقة", "دقائق"][getArabicForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return c === 1 ? "ثانية" : "ثواني";
     },
     decimal: ","
@@ -227,51 +253,51 @@ function getSlavicForm(c) {
     }
 }
 
-const lang$1 = {
-    years(c) {
+var lang$1 = {
+    years: function (c) {
         return ["години", "година", "години"][getSlavicForm(c)];
     },
-    months(c) {
+    months: function (c) {
         return ["месеца", "месец", "месеца"][getSlavicForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["седмици", "седмица", "седмици"][getSlavicForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["дни", "ден", "дни"][getSlavicForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["часа", "час", "часа"][getSlavicForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["минути", "минута", "минути"][getSlavicForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["секунди", "секунда", "секунди"][getSlavicForm(c)];
     },
     decimal: ","
 };
 
-const lang$2 = {
-    years(c) {
+var lang$2 = {
+    years: function (c) {
         return "any" + (c === 1 ? "" : "s");
     },
-    months(c) {
+    months: function (c) {
         return "mes" + (c === 1 ? "" : "os");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "setman" + (c === 1 ? "a" : "es");
     },
-    days(c) {
+    days: function (c) {
         return "di" + (c === 1 ? "a" : "es");
     },
-    hours(c) {
+    hours: function (c) {
         return "hor" + (c === 1 ? "a" : "es");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minut" + (c === 1 ? "" : "s");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "segon" + (c === 1 ? "" : "s");
     },
     decimal: ","
@@ -292,314 +318,314 @@ function getCzechOrSlovakForm(c) {
     }
 }
 
-const lang$3 = {
-    years(c) {
+var lang$3 = {
+    years: function (c) {
         return ["rok", "roku", "roky", "let"][getCzechOrSlovakForm(c)];
     },
-    months(c) {
+    months: function (c) {
         return ["měsíc", "měsíce", "měsíce", "měsíců"][getCzechOrSlovakForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["týden", "týdne", "týdny", "týdnů"][getCzechOrSlovakForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["den", "dne", "dny", "dní"][getCzechOrSlovakForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["hodina", "hodiny", "hodiny", "hodin"][getCzechOrSlovakForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["minuta", "minuty", "minuty", "minut"][getCzechOrSlovakForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["sekunda", "sekundy", "sekundy", "sekund"][getCzechOrSlovakForm(c)];
     },
     decimal: ","
 };
 
-const lang$4 = {
-    years() {
+var lang$4 = {
+    years: function () {
         return "år";
     },
-    months(c) {
+    months: function (c) {
         return "måned" + (c === 1 ? "" : "er");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "uge" + (c === 1 ? "" : "r");
     },
-    days(c) {
+    days: function (c) {
         return "dag" + (c === 1 ? "" : "e");
     },
-    hours(c) {
+    hours: function (c) {
         return "time" + (c === 1 ? "" : "r");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minut" + (c === 1 ? "" : "ter");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "er");
     },
     decimal: ","
 };
 
-const lang$5 = {
-    years(c) {
+var lang$5 = {
+    years: function (c) {
         return "Jahr" + (c === 1 ? "" : "e");
     },
-    months(c) {
+    months: function (c) {
         return "Monat" + (c === 1 ? "" : "e");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "Woche" + (c === 1 ? "" : "n");
     },
-    days(c) {
+    days: function (c) {
         return "Tag" + (c === 1 ? "" : "e");
     },
-    hours(c) {
+    hours: function (c) {
         return "Stunde" + (c === 1 ? "" : "n");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "Minute" + (c === 1 ? "" : "n");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "Sekunde" + (c === 1 ? "" : "n");
     },
     decimal: ","
 };
 
-const lang$6 = {
-    years(c) {
+var lang$6 = {
+    years: function (c) {
         return "year" + (c === 1 ? "" : "s");
     },
-    months(c) {
+    months: function (c) {
         return "month" + (c === 1 ? "" : "s");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "week" + (c === 1 ? "" : "s");
     },
-    days(c) {
+    days: function (c) {
         return "day" + (c === 1 ? "" : "s");
     },
-    hours(c) {
+    hours: function (c) {
         return "hour" + (c === 1 ? "" : "s");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minute" + (c === 1 ? "" : "s");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "second" + (c === 1 ? "" : "s");
     },
     decimal: "."
 };
 
-const lang$7 = {
-    years(c) {
+var lang$7 = {
+    years: function (c) {
         return "año" + (c === 1 ? "" : "s");
     },
-    months(c) {
+    months: function (c) {
         return "mes" + (c === 1 ? "" : "es");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "semana" + (c === 1 ? "" : "s");
     },
-    days(c) {
+    days: function (c) {
         return "día" + (c === 1 ? "" : "s");
     },
-    hours(c) {
+    hours: function (c) {
         return "hora" + (c === 1 ? "" : "s");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minuto" + (c === 1 ? "" : "s");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "segundo" + (c === 1 ? "" : "s");
     },
     decimal: ","
 };
 
-const lang$8 = {
-    years(c) {
+var lang$8 = {
+    years: function (c) {
         return "aasta" + (c === 1 ? "" : "t");
     },
-    months(c) {
+    months: function (c) {
         return "kuu" + (c === 1 ? "" : "d");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "nädal" + (c === 1 ? "" : "at");
     },
-    days(c) {
+    days: function (c) {
         return "päev" + (c === 1 ? "" : "a");
     },
-    hours(c) {
+    hours: function (c) {
         return "tund" + (c === 1 ? "" : "i");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minut" + (c === 1 ? "" : "it");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "it");
     },
     decimal: ","
 };
 
-const lang$9 = {
-    years() {
+var lang$9 = {
+    years: function () {
         return "سال";
     },
-    months() {
+    months: function () {
         return "ماه";
     },
-    weeks() {
+    weeks: function () {
         return "هفته";
     },
-    days() {
+    days: function () {
         return "روز";
     },
-    hours() {
+    hours: function () {
         return "ساعت";
     },
-    minutes() {
+    minutes: function () {
         return "دقیقه";
     },
-    seconds() {
+    seconds: function () {
         return "ثانیه";
     },
     decimal: "."
 };
 
-const lang$a = {
-    years(c) {
+var lang$a = {
+    years: function (c) {
         return c === 1 ? "vuosi" : "vuotta";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "kuukausi" : "kuukautta";
     },
-    weeks(c) {
+    weeks: function (c) {
         return "viikko" + (c === 1 ? "" : "a");
     },
-    days(c) {
+    days: function (c) {
         return "päivä" + (c === 1 ? "" : "ä");
     },
-    hours(c) {
+    hours: function (c) {
         return "tunti" + (c === 1 ? "" : "a");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minuutti" + (c === 1 ? "" : "a");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "sekunti" + (c === 1 ? "" : "a");
     },
     decimal: ","
 };
 
-const lang$b = {
-    years() {
+var lang$b = {
+    years: function () {
         return "ár";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "mánaður" : "mánaðir";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "vika" : "vikur";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "dagur" : "dagar";
     },
-    hours(c) {
+    hours: function (c) {
         return c === 1 ? "tími" : "tímar";
     },
-    minutes(c) {
+    minutes: function (c) {
         return c === 1 ? "minuttur" : "minuttir";
     },
-    seconds() {
+    seconds: function () {
         return "sekund";
     },
     decimal: ","
 };
 
-const lang$c = {
-    years(c) {
+var lang$c = {
+    years: function (c) {
         return "an" + (c >= 2 ? "s" : "");
     },
-    months() {
+    months: function () {
         return "mois";
     },
-    weeks(c) {
+    weeks: function (c) {
         return "semaine" + (c >= 2 ? "s" : "");
     },
-    days(c) {
+    days: function (c) {
         return "jour" + (c >= 2 ? "s" : "");
     },
-    hours(c) {
+    hours: function (c) {
         return "heure" + (c >= 2 ? "s" : "");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minute" + (c >= 2 ? "s" : "");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "seconde" + (c >= 2 ? "s" : "");
     },
     decimal: ","
 };
 
-const lang$d = {
-    years(c) {
+var lang$d = {
+    years: function (c) {
         return c === 1 ? "χρόνος" : "χρόνια";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "μήνας" : "μήνες";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "εβδομάδα" : "εβδομάδες";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "μέρα" : "μέρες";
     },
-    hours(c) {
+    hours: function (c) {
         return c === 1 ? "ώρα" : "ώρες";
     },
-    minutes(c) {
+    minutes: function (c) {
         return c === 1 ? "λεπτό" : "λεπτά";
     },
-    seconds(c) {
+    seconds: function (c) {
         return c === 1 ? "δευτερόλεπτο" : "δευτερόλεπτα";
     },
     decimal: ","
 };
 
-const lang$e = {
-    years(c) {
+var lang$e = {
+    years: function (c) {
         return c === 1 ? "שנה" : "שנים";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "חודש" : "חודשים";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "שבוע" : "שבועות";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "יום" : "ימים";
     },
-    hours(c) {
+    hours: function (c) {
         return c === 1 ? "שעה" : "שעות";
     },
-    minutes(c) {
+    minutes: function (c) {
         return c === 1 ? "דקה" : "דקות";
     },
-    seconds(c) {
+    seconds: function (c) {
         return c === 1 ? "שניה" : "שניות";
     },
     decimal: "."
 };
 
-const lang$f = {
-    years(c) {
+var lang$f = {
+    years: function (c) {
         if (c % 10 === 2 || c % 10 === 3 || c % 10 === 4) {
             return "godine";
         }
         return "godina";
     },
-    months(c) {
+    months: function (c) {
         if (c === 1) {
             return "mjesec";
         }
@@ -608,16 +634,16 @@ const lang$f = {
         }
         return "mjeseci";
     },
-    weeks(c) {
+    weeks: function (c) {
         if (c % 10 === 1 && c !== 11) {
             return "tjedan";
         }
         return "tjedna";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "dan" : "dana";
     },
-    hours(c) {
+    hours: function (c) {
         if (c === 1) {
             return "sat";
         }
@@ -626,14 +652,14 @@ const lang$f = {
         }
         return "sati";
     },
-    minutes(c) {
-        const mod10 = c % 10;
+    minutes: function (c) {
+        var mod10 = c % 10;
         if ((mod10 === 2 || mod10 === 3 || mod10 === 4) && (c < 10 || c > 14)) {
             return "minute";
         }
         return "minuta";
     },
-    seconds(c) {
+    seconds: function (c) {
         if (c === 10 ||
             c === 11 ||
             c === 12 ||
@@ -657,151 +683,151 @@ const lang$f = {
     decimal: ","
 };
 
-const lang$g = {
-    years() {
+var lang$g = {
+    years: function () {
         return "év";
     },
-    months() {
+    months: function () {
         return "hónap";
     },
-    weeks() {
+    weeks: function () {
         return "hét";
     },
-    days() {
+    days: function () {
         return "nap";
     },
-    hours() {
+    hours: function () {
         return "óra";
     },
-    minutes() {
+    minutes: function () {
         return "perc";
     },
-    seconds() {
+    seconds: function () {
         return "másodperc";
     },
     decimal: ","
 };
 
-const lang$h = {
-    years() {
+var lang$h = {
+    years: function () {
         return "ár";
     },
-    months(c) {
+    months: function (c) {
         return "mánuð" + (c === 1 ? "ur" : "ir");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "vik" + (c === 1 ? "a" : "ur");
     },
-    days(c) {
+    days: function (c) {
         return "dag" + (c === 1 ? "ur" : "ar");
     },
-    hours(c) {
+    hours: function (c) {
         return "klukkutím" + (c === 1 ? "i" : "ar");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "mínút" + (c === 1 ? "a" : "ur");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "sekúnd" + (c === 1 ? "a" : "ur");
     },
     decimal: "."
 };
 
-const lang$i = {
-    years(c) {
+var lang$i = {
+    years: function (c) {
         return "ann" + (c === 1 ? "o" : "i");
     },
-    months(c) {
+    months: function (c) {
         return "mes" + (c === 1 ? "e" : "i");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "settiman" + (c === 1 ? "a" : "e");
     },
-    days(c) {
+    days: function (c) {
         return "giorn" + (c === 1 ? "o" : "i");
     },
-    hours(c) {
+    hours: function (c) {
         return "or" + (c === 1 ? "a" : "e");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minut" + (c === 1 ? "o" : "i");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "second" + (c === 1 ? "o" : "i");
     },
     decimal: ","
 };
 
-const lang$j = {
-    years() {
+var lang$j = {
+    years: function () {
         return "年";
     },
-    months() {
+    months: function () {
         return "月";
     },
-    weeks() {
+    weeks: function () {
         return "週";
     },
-    days() {
+    days: function () {
         return "日";
     },
-    hours() {
+    hours: function () {
         return "時間";
     },
-    minutes() {
+    minutes: function () {
         return "分";
     },
-    seconds() {
+    seconds: function () {
         return "秒";
     },
     decimal: "."
 };
 
-const lang$k = {
-    years() {
+var lang$k = {
+    years: function () {
         return "년";
     },
-    months() {
+    months: function () {
         return "개월";
     },
-    weeks() {
+    weeks: function () {
         return "주일";
     },
-    days() {
+    days: function () {
         return "일";
     },
-    hours() {
+    hours: function () {
         return "시간";
     },
-    minutes() {
+    minutes: function () {
         return "분";
     },
-    seconds() {
+    seconds: function () {
         return "초";
     },
     decimal: "."
 };
 
-const lang$l = {
-    years() {
+var lang$l = {
+    years: function () {
         return "ປີ";
     },
-    months() {
+    months: function () {
         return "ເດືອນ";
     },
-    weeks() {
+    weeks: function () {
         return "ອາທິດ";
     },
-    days() {
+    days: function () {
         return "ມື້";
     },
-    hours() {
+    hours: function () {
         return "ຊົ່ວໂມງ";
     },
-    minutes() {
+    minutes: function () {
         return "ນາທີ";
     },
-    seconds() {
+    seconds: function () {
         return "ວິນາທີ";
     },
     decimal: ","
@@ -821,26 +847,26 @@ function getLithuanianForm(c) {
     }
 }
 
-const lang$m = {
-    years(c) {
+var lang$m = {
+    years: function (c) {
         return c % 10 === 0 || (c % 100 >= 10 && c % 100 <= 20) ? "metų" : "metai";
     },
-    months(c) {
+    months: function (c) {
         return ["mėnuo", "mėnesiai", "mėnesių"][getLithuanianForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["savaitė", "savaitės", "savaičių"][getLithuanianForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["diena", "dienos", "dienų"][getLithuanianForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["valanda", "valandos", "valandų"][getLithuanianForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["minutė", "minutės", "minučių"][getLithuanianForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["sekundė", "sekundės", "sekundžių"][getLithuanianForm(c)];
     },
     decimal: ","
@@ -855,101 +881,101 @@ function getLatvianForm(c) {
     }
 }
 
-const lang$n = {
-    years(c) {
+var lang$n = {
+    years: function (c) {
         return ["gads", "gadi"][getLatvianForm(c)];
     },
-    months(c) {
+    months: function (c) {
         return ["mēnesis", "mēneši"][getLatvianForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["nedēļa", "nedēļas"][getLatvianForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["diena", "dienas"][getLatvianForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["stunda", "stundas"][getLatvianForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["minūte", "minūtes"][getLatvianForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["sekunde", "sekundes"][getLatvianForm(c)];
     },
     decimal: ","
 };
 
-const lang$o = {
-    years() {
+var lang$o = {
+    years: function () {
         return "tahun";
     },
-    months() {
+    months: function () {
         return "bulan";
     },
-    weeks() {
+    weeks: function () {
         return "minggu";
     },
-    days() {
+    days: function () {
         return "hari";
     },
-    hours() {
+    hours: function () {
         return "jam";
     },
-    minutes() {
+    minutes: function () {
         return "minit";
     },
-    seconds() {
+    seconds: function () {
         return "saat";
     },
     decimal: "."
 };
 
-const lang$p = {
-    years() {
+var lang$p = {
+    years: function () {
         return "jaar";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "maand" : "maanden";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "week" : "weken";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "dag" : "dagen";
     },
-    hours() {
+    hours: function () {
         return "uur";
     },
-    minutes(c) {
+    minutes: function (c) {
         return c === 1 ? "minuut" : "minuten";
     },
-    seconds(c) {
+    seconds: function (c) {
         return c === 1 ? "seconde" : "seconden";
     },
     decimal: ","
 };
 
-const lang$q = {
-    years() {
+var lang$q = {
+    years: function () {
         return "år";
     },
-    months(c) {
+    months: function (c) {
         return "måned" + (c === 1 ? "" : "er");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "uke" + (c === 1 ? "" : "r");
     },
-    days(c) {
+    days: function (c) {
         return "dag" + (c === 1 ? "" : "er");
     },
-    hours(c) {
+    hours: function (c) {
         return "time" + (c === 1 ? "" : "r");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minutt" + (c === 1 ? "" : "er");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "er");
     },
     decimal: ","
@@ -970,7 +996,7 @@ function getPolishForm(c) {
     }
 }
 
-const lang$r = {
+var lang$r = {
     years: function (c) {
         return ["rok", "roku", "lata", "lat"][getPolishForm(c)];
     },
@@ -995,276 +1021,276 @@ const lang$r = {
     decimal: ","
 };
 
-const lang$s = {
-    years(c) {
+var lang$s = {
+    years: function (c) {
         return "ano" + (c === 1 ? "" : "s");
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "mês" : "meses";
     },
-    weeks(c) {
+    weeks: function (c) {
         return "semana" + (c === 1 ? "" : "s");
     },
-    days(c) {
+    days: function (c) {
         return "dia" + (c === 1 ? "" : "s");
     },
-    hours(c) {
+    hours: function (c) {
         return "hora" + (c === 1 ? "" : "s");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minuto" + (c === 1 ? "" : "s");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "segundo" + (c === 1 ? "" : "s");
     },
     decimal: ","
 };
 
-const lang$t = {
-    years(c) {
+var lang$t = {
+    years: function (c) {
         return c === 1 ? "an" : "ani";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "lună" : "luni";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "săptămână" : "săptămâni";
     },
-    days(c) {
+    days: function (c) {
         return c === 1 ? "zi" : "zile";
     },
-    hours(c) {
+    hours: function (c) {
         return c === 1 ? "oră" : "ore";
     },
-    minutes(c) {
+    minutes: function (c) {
         return c === 1 ? "minut" : "minute";
     },
-    seconds(c) {
+    seconds: function (c) {
         return c === 1 ? "secundă" : "secunde";
     },
     decimal: ","
 };
 
-const lang$u = {
-    years(c) {
+var lang$u = {
+    years: function (c) {
         return ["лет", "год", "года"][getSlavicForm(c)];
     },
-    months(c) {
+    months: function (c) {
         return ["месяцев", "месяц", "месяца"][getSlavicForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["недель", "неделя", "недели"][getSlavicForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["дней", "день", "дня"][getSlavicForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["часов", "час", "часа"][getSlavicForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["минут", "минута", "минуты"][getSlavicForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["секунд", "секунда", "секунды"][getSlavicForm(c)];
     },
     decimal: ","
 };
 
-const lang$v = {
-    years(c) {
+var lang$v = {
+    years: function (c) {
         return ["rok", "roky", "roky", "rokov"][getCzechOrSlovakForm(c)];
     },
-    months(c) {
+    months: function (c) {
         return ["mesiac", "mesiace", "mesiace", "mesiacov"][getCzechOrSlovakForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["týždeň", "týždne", "týždne", "týždňov"][getCzechOrSlovakForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["deň", "dni", "dni", "dní"][getCzechOrSlovakForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["hodina", "hodiny", "hodiny", "hodín"][getCzechOrSlovakForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["minúta", "minúty", "minúty", "minút"][getCzechOrSlovakForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["sekunda", "sekundy", "sekundy", "sekúnd"][getCzechOrSlovakForm(c)];
     },
     decimal: ","
 };
 
-const lang$w = {
-    years() {
+var lang$w = {
+    years: function () {
         return "år";
     },
-    months(c) {
+    months: function (c) {
         return "månad" + (c === 1 ? "" : "er");
     },
-    weeks(c) {
+    weeks: function (c) {
         return "veck" + (c === 1 ? "a" : "or");
     },
-    days(c) {
+    days: function (c) {
         return "dag" + (c === 1 ? "" : "ar");
     },
-    hours(c) {
+    hours: function (c) {
         return "timm" + (c === 1 ? "e" : "ar");
     },
-    minutes(c) {
+    minutes: function (c) {
         return "minut" + (c === 1 ? "" : "er");
     },
-    seconds(c) {
+    seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "er");
     },
     decimal: ","
 };
 
-const lang$x = {
-    years() {
+var lang$x = {
+    years: function () {
         return "yıl";
     },
-    months() {
+    months: function () {
         return "ay";
     },
-    weeks() {
+    weeks: function () {
         return "hafta";
     },
-    days() {
+    days: function () {
         return "gün";
     },
-    hours() {
+    hours: function () {
         return "saat";
     },
-    minutes() {
+    minutes: function () {
         return "dakika";
     },
-    seconds() {
+    seconds: function () {
         return "saniye";
     },
     decimal: ","
 };
 
-const lang$y = {
-    years(c) {
+var lang$y = {
+    years: function (c) {
         return ["років", "рік", "роки"][getSlavicForm(c)];
     },
-    months(c) {
+    months: function (c) {
         return ["місяців", "місяць", "місяці"][getSlavicForm(c)];
     },
-    weeks(c) {
+    weeks: function (c) {
         return ["тижнів", "тиждень", "тижні"][getSlavicForm(c)];
     },
-    days(c) {
+    days: function (c) {
         return ["днів", "день", "дні"][getSlavicForm(c)];
     },
-    hours(c) {
+    hours: function (c) {
         return ["годин", "година", "години"][getSlavicForm(c)];
     },
-    minutes(c) {
+    minutes: function (c) {
         return ["хвилин", "хвилина", "хвилини"][getSlavicForm(c)];
     },
-    seconds(c) {
+    seconds: function (c) {
         return ["секунд", "секунда", "секунди"][getSlavicForm(c)];
     },
     decimal: ","
 };
 
-const lang$z = {
-    years() {
+var lang$z = {
+    years: function () {
         return "سال";
     },
-    months(c) {
+    months: function (c) {
         return c === 1 ? "مہینہ" : "مہینے";
     },
-    weeks(c) {
+    weeks: function (c) {
         return c === 1 ? "ہفتہ" : "ہفتے";
     },
-    days() {
+    days: function () {
         return "دن";
     },
-    hours(c) {
+    hours: function (c) {
         return c === 1 ? "گھنٹہ" : "گھنٹے";
     },
-    minutes() {
+    minutes: function () {
         return "منٹ";
     },
-    seconds() {
+    seconds: function () {
         return "سیکنڈ";
     },
     decimal: "."
 };
 
-const lang$A = {
-    years() {
+var lang$A = {
+    years: function () {
         return "năm";
     },
-    months() {
+    months: function () {
         return "tháng";
     },
-    weeks() {
+    weeks: function () {
         return "tuần";
     },
-    days() {
+    days: function () {
         return "ngày";
     },
-    hours() {
+    hours: function () {
         return "giờ";
     },
-    minutes() {
+    minutes: function () {
         return "phút";
     },
-    seconds() {
+    seconds: function () {
         return "giây";
     },
     decimal: ","
 };
 
-const lang$B = {
-    years() {
+var lang$B = {
+    years: function () {
         return "年";
     },
-    months() {
+    months: function () {
         return "个月";
     },
-    weeks() {
+    weeks: function () {
         return "周";
     },
-    days() {
+    days: function () {
         return "天";
     },
-    hours() {
+    hours: function () {
         return "小时";
     },
-    minutes() {
+    minutes: function () {
         return "分钟";
     },
-    seconds() {
+    seconds: function () {
         return "秒";
     },
     decimal: "."
 };
 
-const lang$C = {
-    years() {
+var lang$C = {
+    years: function () {
         return "年";
     },
-    months() {
+    months: function () {
         return "個月";
     },
-    weeks() {
+    weeks: function () {
         return "周";
     },
-    days() {
+    days: function () {
         return "天";
     },
-    hours() {
+    hours: function () {
         return "小時";
     },
-    minutes() {
+    minutes: function () {
         return "分鐘";
     },
-    seconds() {
+    seconds: function () {
         return "秒";
     },
     decimal: "."
