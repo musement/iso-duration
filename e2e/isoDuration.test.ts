@@ -59,6 +59,23 @@ describe("isoDuration", () => {
         "1 year 2 months 3 days 4 hours 5 minutes 6.5 seconds"
       );
     });
+
+    it("humanize should return correct text length when config is passed", () => {
+      expect(duration.humanize("en", { largest: 2 })).toEqual(
+        "1 year 2 months"
+      );
+
+      expect(duration.humanize("en", { largest: 3 })).toEqual(
+        "1 year 2 months 3 days"
+      );
+    });
+  });
+
+  describe("when normalized is called with correct values", () => {
+    const duration = isoDuration("PT90S");
+    it("should throw an error", () => {
+      expect(duration.normalize().toString()).toEqual("PT1M30S");
+    });
   });
 
   describe("when duration is created with invalid string", () => {
@@ -71,13 +88,6 @@ describe("isoDuration", () => {
     const duration = isoDuration("P1W");
     it("should throw an error", () => {
       expect(() => duration.humanize("not_included_lang")).toThrow(Error);
-    });
-  });
-
-  describe("when normalized is called with correct values", () => {
-    const duration = isoDuration("PT90S");
-    it("should throw an error", () => {
-      expect(duration.normalize().toString()).toEqual("PT1M30S");
     });
   });
 });

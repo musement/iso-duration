@@ -1,4 +1,4 @@
-import { DurationObj } from "../types";
+import { DurationObj, HumanizeConfig } from "../types";
 import { durationObjToString } from "./durationObjToString";
 import { humanize } from "./humanize";
 import { normalize } from "./normalize";
@@ -18,8 +18,8 @@ export class IsoDuration {
     return durationObjToString(this.durationObj);
   }
 
-  public humanize(lang: string): string {
-    return humanize(this.durationObj, lang);
+  public humanize(lang: string, config?: HumanizeConfig): string {
+    return humanize(this.durationObj, lang, config);
   }
 
   public normalize(date?: Date): IsoDuration {

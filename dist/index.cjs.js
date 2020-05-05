@@ -155,7 +155,7 @@ var humanizeWeek = function (durationObj, lang) {
     var localeConfig = config.getLangConfig(lang);
     return durationObj.weeks + " " + localeConfig.weeks(durationObj.weeks);
 };
-var humanizeDate = function (durationObj, lang) {
+var humanizeDate = function (durationObj, lang, humanizeConfig) {
     var localeConfig = config.getLangConfig(lang);
     var humanizedTime = "";
     var humanizeOrder = [
@@ -166,23 +166,31 @@ var humanizeDate = function (durationObj, lang) {
         "minutes",
         "seconds"
     ];
-    humanizeOrder.forEach(function (item, index) {
+    var numOfHumanizedUnits = 0;
+    for (var index = 0; index < humanizeOrder.length; index++) {
+        var item = humanizeOrder[index];
         var unitDuration = durationObj[item];
         if (unitDuration) {
             if (humanizedTime !== "") {
                 humanizedTime += " ";
             }
             humanizedTime += unitDuration + " " + localeConfig[item](unitDuration);
+            numOfHumanizedUnits++;
+            if (humanizeConfig &&
+                humanizeConfig.largest &&
+                humanizeConfig.largest <= numOfHumanizedUnits) {
+                break;
+            }
         }
-    });
+    }
     return humanizedTime;
 };
-var humanize = function (durationObj, lang) {
+var humanize = function (durationObj, lang, humanizeConfig) {
     if (durationObj.weeks > 0) {
         return humanizeWeek(durationObj, lang);
     }
     else {
-        return humanizeDate(durationObj, lang);
+        return humanizeDate(durationObj, lang, humanizeConfig);
     }
 };
 
@@ -208,8 +216,8 @@ var unitNormalizer = {
     seconds: getNormalizer(60),
     minutes: getNormalizer(60),
     hours: getNormalizer(24),
-    days: function (val, startDate) {
-        var helperDate = startDate ? new Date(startDate.getTime()) : new Date();
+    days: function (val, date) {
+        var helperDate = date ? new Date(date.getTime()) : new Date();
         var days = val;
         var fullMonths = 0;
         var daysInMonth = getDaysInMonth(helperDate.getMonth(), helperDate.getFullYear());
@@ -226,13 +234,13 @@ var unitNormalizer = {
     },
     months: getNormalizer(12)
 };
-var normalize = function (duration, startDate) {
+var normalize = function (duration, date) {
     var normalizedDuration = __assign({}, duration);
     for (var i = 0; i < normalizeOrder.length; i++) {
         var unit = normalizeOrder[i];
         var unitValue = normalizedDuration[unit];
         if (unitValue > 0) {
-            var temp = unitNormalizer[unit](unitValue, startDate);
+            var temp = unitNormalizer[unit](unitValue, date);
             normalizedDuration[unit] = temp.value;
             if (temp.nextUnitValue) {
                 var nextUnit = unit === "months" ? "years" : normalizeOrder[i + 1];
@@ -254,11 +262,11 @@ var IsoDuration = /** @class */ (function () {
     IsoDuration.prototype.toString = function () {
         return durationObjToString(this.durationObj);
     };
-    IsoDuration.prototype.humanize = function (lang) {
-        return humanize(this.durationObj, lang);
+    IsoDuration.prototype.humanize = function (lang, config) {
+        return humanize(this.durationObj, lang, config);
     };
-    IsoDuration.prototype.normalize = function (startDate) {
-        this.durationObj = normalize(this.durationObj, startDate);
+    IsoDuration.prototype.normalize = function (date) {
+        this.durationObj = normalize(this.durationObj, date);
         return this;
     };
     return IsoDuration;

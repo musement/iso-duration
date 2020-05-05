@@ -116,11 +116,32 @@ console.log(isoDuration("P8T30M").parse())
 // P8T30M
 ```
 
-* `humanize(lang: string)` returns duration in human readable way:
+* `humanize(lang: string, config?: HumanizeConfig)` returns duration in human readable way:   
 ⚠ Warning ️⚠ - used `lang` needs to be previously added to the library using `isoDuration.setLocales`
 ```
 console.log(isoDuration("P8T30M").humanize('en'))
 // 8 hours 30 minutes
+```
+
+`HumanizeConfig` Object:
+```
+{
+  largest: number
+}
+```
+`largest` - Reduce number of humanized to N the largest units:
+```
+console.log(
+  isoDuration({
+    years: 2,
+    months: 0,
+    days: 8,
+    hours: 20,
+    minutes: 30,
+    seconds: 15
+  }).humanize('en', { largest: 2 })
+)
+// 2 years 8 days
 ```
 
 * `normalize(date?: Date)` returns normalized IsoDuration object:
