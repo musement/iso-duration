@@ -2,7 +2,6 @@
 
 #### Instalation: 
 ```
-//Check current version at the end!!!
 npm i @musement/iso-duration --save
 ```
 
