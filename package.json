@@ -17,6 +17,9 @@
     "release": "standard-version --commit-all",
     "develop": "node ./develop/testing_enviroment.js"
   },
+  "files": [
+    "dist"
+  ],
   "author": "Musement",
   "contributors": [
     "Przemysław Fałowski <przemyslaw.falowski@musement.com>"
