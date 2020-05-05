@@ -73,4 +73,11 @@ describe("isoDuration", () => {
       expect(() => duration.humanize("not_included_lang")).toThrow(Error);
     });
   });
+
+  describe("when normalized is called with correct values", () => {
+    const duration = isoDuration("PT90S");
+    it("should throw an error", () => {
+      expect(duration.normalize().toString()).toEqual("PT1M30S");
+    });
+  });
 });

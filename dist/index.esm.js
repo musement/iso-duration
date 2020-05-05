@@ -182,6 +182,64 @@ var humanize = function (durationObj, lang) {
     }
 };
 
+var normalizeOrder = [
+    "seconds",
+    "minutes",
+    "hours",
+    "days",
+    "months"
+];
+var getNormalizer = function (maxValue) {
+    return function (val) {
+        return {
+            nextUnitValue: Math.floor(val / maxValue),
+            value: val % maxValue
+        };
+    };
+};
+var getDaysInMonth = function (month, year) {
+    return new Date(year, month + 1, 0).getDate();
+};
+var unitNormalizer = {
+    seconds: getNormalizer(60),
+    minutes: getNormalizer(60),
+    hours: getNormalizer(24),
+    days: function (val, startDate) {
+        var helperDate = startDate ? new Date(startDate.getTime()) : new Date();
+        var days = val;
+        var fullMonths = 0;
+        var daysInMonth = getDaysInMonth(helperDate.getMonth(), helperDate.getFullYear());
+        while (days > daysInMonth) {
+            days = days - daysInMonth;
+            fullMonths++;
+            helperDate.setMonth(helperDate.getMonth() + 1);
+            daysInMonth = getDaysInMonth(helperDate.getMonth(), helperDate.getFullYear());
+        }
+        return {
+            nextUnitValue: fullMonths,
+            value: days
+        };
+    },
+    months: getNormalizer(12)
+};
+var normalize = function (duration, startDate) {
+    var normalizedDuration = __assign({}, duration);
+    for (var i = 0; i < normalizeOrder.length; i++) {
+        var unit = normalizeOrder[i];
+        var unitValue = normalizedDuration[unit];
+        if (unitValue > 0) {
+            var temp = unitNormalizer[unit](unitValue, startDate);
+            normalizedDuration[unit] = temp.value;
+            if (temp.nextUnitValue) {
+                var nextUnit = unit === "months" ? "years" : normalizeOrder[i + 1];
+                normalizedDuration[nextUnit] =
+                    normalizedDuration[nextUnit] + temp.nextUnitValue;
+            }
+        }
+    }
+    return normalizedDuration;
+};
+
 var IsoDuration = /** @class */ (function () {
     function IsoDuration(durationObj) {
         this.durationObj = durationObj;
@@ -194,6 +252,10 @@ var IsoDuration = /** @class */ (function () {
     };
     IsoDuration.prototype.humanize = function (lang) {
         return humanize(this.durationObj, lang);
+    };
+    IsoDuration.prototype.normalize = function (startDate) {
+        this.durationObj = normalize(this.durationObj, startDate);
+        return this;
     };
     return IsoDuration;
 }());

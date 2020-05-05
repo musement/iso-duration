@@ -1,4 +1,4 @@
-## Iso-duration
+## @musement/iso-duration
 
 #### Instalation: 
 ```
@@ -121,4 +121,25 @@ console.log(isoDuration("P8T30M").parse())
 ```
 console.log(isoDuration("P8T30M").humanize('en'))
 // 8 hours 30 minutes
+```
+
+* `normalize(date?: Date)` returns normalized IsoDuration object:
+```
+console.log(isoDuration("PT90M").normalize().parse())
+// PT1H30M
+```
+
+This method takes an optional argument `date` which defines start of duration. It's used to correctly normalize number of days basing on corresponding month's length.   
+If it's not present normalize function will use current date (`new Date()`) instead.
+
+Month with 31 days:
+```
+console.log("Duration:", isoDuration("P31D").normalize(new Date(2020, 0, 1)).humanize('en'))
+//Duration: 31 days
+```
+
+Month with 29 days:
+```
+console.log("Duration:", isoDuration("P31D").normalize(new Date(2020, 1, 1)).humanize('en'))
+//Duration: 1 month 2 days
 ```

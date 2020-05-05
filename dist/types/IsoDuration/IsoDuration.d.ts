@@ -5,4 +5,5 @@ export declare class IsoDuration {
     parse(): DurationObj;
     toString(): string;
     humanize(lang: string): string;
+    normalize(startDate?: Date): IsoDuration;
 }

@@ -14,7 +14,8 @@
     "typeCheck": "tsc --noEmit",
     "lint": "tsc --noEmit && eslint . --ext .ts,.js",
     "prerelease": "npm run build && git add dist/",
-    "release": "standard-version --commit-all"
+    "release": "standard-version --commit-all",
+    "develop": "node ./develop/testing_enviroment.js"
   },
   "author": "Musement",
   "contributors": [

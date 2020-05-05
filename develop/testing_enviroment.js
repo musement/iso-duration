@@ -8,7 +8,7 @@ isoDuration.setLocales({
   pt: pl
 });
 
-const test = isoDuration("P10Y3DT4H5M6.5S");
+const test = isoDuration("P31D").normalize(new Date(2020, 1, 1));
 // const test = isoDuration("P1W");
 // const test = isoDuration({
 //   hours: 5,
