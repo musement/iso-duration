@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.5...v0.0.6) (2020-05-05)
+
 ### [0.0.5](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.4...v0.0.5) (2020-05-05)
 
 
