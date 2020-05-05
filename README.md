@@ -3,7 +3,7 @@
 #### Instalation: 
 ```
 //Check current version at the end!!!
-npm i --save @musement/iso-duration@git+ssh://git@gitlab.com:musement/frontend-shared/domain-content/iso-duration.git#v0.0.2
+npm i @musement/iso-duration --save
 ```
 
 #### Quick start:
