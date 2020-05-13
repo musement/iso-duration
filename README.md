@@ -94,6 +94,14 @@ isoDuration.setLocales({
 })
 ```
 
+#### Configuration
+`isoDuration.setLocales` can take an `option` object as second argument (optional):
+
+| Key                    | Type     | Description                                                   | Default
+| ---------------------- | -------- |-------------------------------------------------------------- | -----------
+| `fallbackLocale`       | String   | fallback locale used when an invalid locale is passed to `IsoDuration.humanize` | `undefined`
+
+
 ### IsoDuration object:
 * `parse()` return `DurationObj` with all time periods represented as JS object
 ```

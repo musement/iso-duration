@@ -1,4 +1,4 @@
-import { DurationObj, Locales } from "./types";
+import { DurationObj, Locales, LocalesOptions } from "./types";
 import { normalizeDurationObj, parseIsoString } from "./helpers/utils";
 import config from "./config";
 import { IsoDuration } from "./IsoDuration/IsoDuration";
@@ -10,8 +10,11 @@ function isoDuration(duration: string | Partial<DurationObj>): IsoDuration {
   return new IsoDuration(normalizeDurationObj(duration));
 }
 
-isoDuration.setLocales = function(obj: Locales): void {
-  config.setLocales(obj);
+isoDuration.setLocales = function(
+  obj: Locales,
+  options?: LocalesOptions
+): void {
+  config.setLocales(obj, options);
 };
 
 export { isoDuration };

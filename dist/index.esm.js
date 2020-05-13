@@ -64,7 +64,6 @@ var durationZero = Object.freeze({
     minutes: 0,
     seconds: 0
 });
-//# sourceMappingURL=contants.js.map
 
 /** Parse PnYnMnDTnHnMnS format to object
  * @param {string} durationString - PnYnMnDTnHnMnS or PnW formatted string
@@ -96,18 +95,24 @@ var normalizeDurationObj = function (partialDurationObj) {
 
 var config = {
     locales: {},
-    setLocales: function (locales) {
+    options: {},
+    setLocales: function (locales, options) {
         this.locales = __assign(__assign({}, this.locales), locales);
+        if (options) {
+            this.options = __assign(__assign({}, this.options), options);
+        }
     },
     getLangConfig: function (lang) {
         var localesConfig = this.locales[lang];
+        if (!localesConfig && this.options.fallbackLocale) {
+            localesConfig = this.locales[this.options.fallbackLocale];
+        }
         if (!localesConfig) {
             throw new Error("isoDuration: Translations for language: " + lang + " are not provided");
         }
         return localesConfig;
     }
 };
-//# sourceMappingURL=config.js.map
 
 var getIsoDateElements = function (durationObj) {
     var isoItems = ["years", "months", "days"];
@@ -151,7 +156,6 @@ var durationObjToString = function (durationObj) {
         return durationIsoString;
     }
 };
-//# sourceMappingURL=durationObjToString.js.map
 
 var humanizeWeek = function (durationObj, lang) {
     var localeConfig = config.getLangConfig(lang);
@@ -195,7 +199,6 @@ var humanize = function (durationObj, lang, humanizeConfig) {
         return humanizeDate(durationObj, lang, humanizeConfig);
     }
 };
-//# sourceMappingURL=humanize.js.map
 
 var normalizeOrder = [
     "seconds",
@@ -254,7 +257,6 @@ var normalize = function (duration, date) {
     }
     return normalizedDuration;
 };
-//# sourceMappingURL=normalize.js.map
 
 var IsoDuration = /** @class */ (function () {
     function IsoDuration(durationObj) {
@@ -279,7 +281,6 @@ var IsoDuration = /** @class */ (function () {
     };
     return IsoDuration;
 }());
-//# sourceMappingURL=IsoDuration.js.map
 
 function getArabicForm(c) {
     if (c <= 2) {
@@ -290,7 +291,6 @@ function getArabicForm(c) {
     }
     return 0;
 }
-//# sourceMappingURL=getArabicForm.js.map
 
 var lang = {
     years: function (c) {
@@ -316,7 +316,6 @@ var lang = {
     },
     decimal: ","
 };
-//# sourceMappingURL=ar.js.map
 
 function getSlavicForm(c) {
     if (Math.floor(c) !== c) {
@@ -337,7 +336,6 @@ function getSlavicForm(c) {
         return 0;
     }
 }
-//# sourceMappingURL=getSlavicForm.js.map
 
 var lang$1 = {
     years: function (c) {
@@ -363,7 +361,6 @@ var lang$1 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=bg.js.map
 
 var lang$2 = {
     years: function (c) {
@@ -389,7 +386,6 @@ var lang$2 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=ca.js.map
 
 function getCzechOrSlovakForm(c) {
     if (c === 1) {
@@ -405,7 +401,6 @@ function getCzechOrSlovakForm(c) {
         return 3;
     }
 }
-//# sourceMappingURL=getCzechOrSlovakForm.js.map
 
 var lang$3 = {
     years: function (c) {
@@ -431,7 +426,6 @@ var lang$3 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=cs.js.map
 
 var lang$4 = {
     years: function () {
@@ -457,7 +451,6 @@ var lang$4 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=da.js.map
 
 var lang$5 = {
     years: function (c) {
@@ -483,7 +476,6 @@ var lang$5 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=de.js.map
 
 var lang$6 = {
     years: function (c) {
@@ -509,7 +501,6 @@ var lang$6 = {
     },
     decimal: "."
 };
-//# sourceMappingURL=en.js.map
 
 var lang$7 = {
     years: function (c) {
@@ -535,7 +526,6 @@ var lang$7 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=es.js.map
 
 var lang$8 = {
     years: function (c) {
@@ -561,7 +551,6 @@ var lang$8 = {
     },
     decimal: ","
 };
-//# sourceMappingURL=et.js.map
 
 var lang$9 = {
     years: function () {
@@ -587,7 +576,6 @@ var lang$9 = {
     },
     decimal: "."
 };
-//# sourceMappingURL=fa.js.map
 
 var lang$a = {
     years: function (c) {
@@ -613,7 +601,6 @@ var lang$a = {
     },
     decimal: ","
 };
-//# sourceMappingURL=fi.js.map
 
 var lang$b = {
     years: function () {
@@ -639,7 +626,6 @@ var lang$b = {
     },
     decimal: ","
 };
-//# sourceMappingURL=fo.js.map
 
 var lang$c = {
     years: function (c) {
@@ -665,7 +651,6 @@ var lang$c = {
     },
     decimal: ","
 };
-//# sourceMappingURL=fr.js.map
 
 var lang$d = {
     years: function (c) {
@@ -691,7 +676,6 @@ var lang$d = {
     },
     decimal: ","
 };
-//# sourceMappingURL=gr.js.map
 
 var lang$e = {
     years: function (c) {
@@ -717,7 +701,6 @@ var lang$e = {
     },
     decimal: "."
 };
-//# sourceMappingURL=he.js.map
 
 var lang$f = {
     years: function (c) {
@@ -783,7 +766,6 @@ var lang$f = {
     },
     decimal: ","
 };
-//# sourceMappingURL=hr.js.map
 
 var lang$g = {
     years: function () {
@@ -809,7 +791,6 @@ var lang$g = {
     },
     decimal: ","
 };
-//# sourceMappingURL=hu.js.map
 
 var lang$h = {
     years: function () {
@@ -835,7 +816,6 @@ var lang$h = {
     },
     decimal: "."
 };
-//# sourceMappingURL=is.js.map
 
 var lang$i = {
     years: function (c) {
@@ -861,7 +841,6 @@ var lang$i = {
     },
     decimal: ","
 };
-//# sourceMappingURL=it.js.map
 
 var lang$j = {
     years: function () {
@@ -887,7 +866,6 @@ var lang$j = {
     },
     decimal: "."
 };
-//# sourceMappingURL=ja.js.map
 
 var lang$k = {
     years: function () {
@@ -913,7 +891,6 @@ var lang$k = {
     },
     decimal: "."
 };
-//# sourceMappingURL=ko.js.map
 
 var lang$l = {
     years: function () {
@@ -939,7 +916,6 @@ var lang$l = {
     },
     decimal: ","
 };
-//# sourceMappingURL=lo.js.map
 
 function getLithuanianForm(c) {
     if (c === 1 || (c % 10 === 1 && c % 100 > 20)) {
@@ -954,7 +930,6 @@ function getLithuanianForm(c) {
         return 2;
     }
 }
-//# sourceMappingURL=getLithuanianForm.js.map
 
 var lang$m = {
     years: function (c) {
@@ -980,7 +955,6 @@ var lang$m = {
     },
     decimal: ","
 };
-//# sourceMappingURL=lt.js.map
 
 function getLatvianForm(c) {
     if (c === 1 || (c % 10 === 1 && c % 100 !== 11)) {
@@ -990,7 +964,6 @@ function getLatvianForm(c) {
         return 1;
     }
 }
-//# sourceMappingURL=getLatvianForm.js.map
 
 var lang$n = {
     years: function (c) {
@@ -1016,7 +989,6 @@ var lang$n = {
     },
     decimal: ","
 };
-//# sourceMappingURL=lv.js.map
 
 var lang$o = {
     years: function () {
@@ -1042,7 +1014,6 @@ var lang$o = {
     },
     decimal: "."
 };
-//# sourceMappingURL=ms.js.map
 
 var lang$p = {
     years: function () {
@@ -1068,7 +1039,6 @@ var lang$p = {
     },
     decimal: ","
 };
-//# sourceMappingURL=nl.js.map
 
 var lang$q = {
     years: function () {
@@ -1094,7 +1064,6 @@ var lang$q = {
     },
     decimal: ","
 };
-//# sourceMappingURL=no.js.map
 
 function getPolishForm(c) {
     if (c === 1) {
@@ -1110,7 +1079,6 @@ function getPolishForm(c) {
         return 3;
     }
 }
-//# sourceMappingURL=getPolishForm.js.map
 
 var lang$r = {
     years: function (c) {
@@ -1136,7 +1104,6 @@ var lang$r = {
     },
     decimal: ","
 };
-//# sourceMappingURL=pl.js.map
 
 var lang$s = {
     years: function (c) {
@@ -1162,7 +1129,6 @@ var lang$s = {
     },
     decimal: ","
 };
-//# sourceMappingURL=pt.js.map
 
 var lang$t = {
     years: function (c) {
@@ -1188,7 +1154,6 @@ var lang$t = {
     },
     decimal: ","
 };
-//# sourceMappingURL=ro.js.map
 
 var lang$u = {
     years: function (c) {
@@ -1214,7 +1179,6 @@ var lang$u = {
     },
     decimal: ","
 };
-//# sourceMappingURL=ru.js.map
 
 var lang$v = {
     years: function (c) {
@@ -1240,7 +1204,6 @@ var lang$v = {
     },
     decimal: ","
 };
-//# sourceMappingURL=sk.js.map
 
 var lang$w = {
     years: function () {
@@ -1266,7 +1229,6 @@ var lang$w = {
     },
     decimal: ","
 };
-//# sourceMappingURL=sv.js.map
 
 var lang$x = {
     years: function () {
@@ -1292,7 +1254,6 @@ var lang$x = {
     },
     decimal: ","
 };
-//# sourceMappingURL=tr.js.map
 
 var lang$y = {
     years: function (c) {
@@ -1318,7 +1279,6 @@ var lang$y = {
     },
     decimal: ","
 };
-//# sourceMappingURL=uk.js.map
 
 var lang$z = {
     years: function () {
@@ -1344,7 +1304,6 @@ var lang$z = {
     },
     decimal: "."
 };
-//# sourceMappingURL=ur.js.map
 
 var lang$A = {
     years: function () {
@@ -1370,7 +1329,6 @@ var lang$A = {
     },
     decimal: ","
 };
-//# sourceMappingURL=vi.js.map
 
 var lang$B = {
     years: function () {
@@ -1396,7 +1354,6 @@ var lang$B = {
     },
     decimal: "."
 };
-//# sourceMappingURL=zhCN.js.map
 
 var lang$C = {
     years: function () {
@@ -1422,7 +1379,6 @@ var lang$C = {
     },
     decimal: "."
 };
-//# sourceMappingURL=zhTW.js.map
 
 function isoDuration(duration) {
     if (typeof duration === "string") {
@@ -1430,8 +1386,8 @@ function isoDuration(duration) {
     }
     return new IsoDuration(normalizeDurationObj(duration));
 }
-isoDuration.setLocales = function (obj) {
-    config.setLocales(obj);
+isoDuration.setLocales = function (obj, options) {
+    config.setLocales(obj, options);
 };
 
 export { lang as ar, lang$1 as bg, lang$2 as ca, lang$3 as cs, lang$4 as da, lang$5 as de, lang$6 as en, lang$7 as es, lang$8 as et, lang$9 as fa, lang$a as fi, lang$b as fo, lang$c as fr, lang$d as gr, lang$e as he, lang$f as hr, lang$g as hu, lang$h as is, isoDuration, lang$i as it, lang$j as ja, lang$k as ko, lang$l as lo, lang$m as lt, lang$n as lv, lang$o as ms, lang$p as nl, lang$q as no, lang$r as pl, lang$s as pt, lang$t as ro, lang$u as ru, lang$v as sk, lang$w as sv, lang$x as tr, lang$y as uk, lang$z as ur, lang$A as vi, lang$B as zhCN, lang$C as zhTW };

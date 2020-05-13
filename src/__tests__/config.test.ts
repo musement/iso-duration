@@ -29,8 +29,27 @@ describe("config", () => {
   });
 
   describe("when locales is not available", () => {
-    it("should throw an error", () => {
-      expect(() => config.getLangConfig("not_added_locale")).toThrow(Error);
+    describe("when a fallback locale is given", () => {
+      it("should provided the fallback locales with getLangConfig", () => {
+        config.setLocales({}, { fallbackLocale: "en" });
+        expect(config.getLangConfig("not_added_locale")).toEqual(
+          mocks.fakeEnglishConfig
+        );
+      });
+    });
+
+    describe("when a fallback locale is not given", () => {
+      it("should throw an error", () => {
+        config.setLocales({}, { fallbackLocale: undefined } as any);
+        expect(() => config.getLangConfig("not_added_locale")).toThrow(Error);
+      });
+    });
+
+    describe("when a fallback locale is not valid", () => {
+      it("should throw an error", () => {
+        config.setLocales({}, { fallbackLocale: "not_valid" });
+        expect(() => config.getLangConfig("not_added_locale")).toThrow(Error);
+      });
     });
   });
 });
