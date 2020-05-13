@@ -6,4 +6,5 @@ export declare class IsoDuration {
     toString(): string;
     humanize(lang: string, config?: HumanizeConfig): string;
     normalize(date?: Date): IsoDuration;
+    isEmpty(): boolean;
 }

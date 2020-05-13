@@ -1,4 +1,4 @@
-import { DurationObj, HumanizeConfig } from "../types";
+import { DurationObj, HumanizeConfig, DurationUnit } from "../types";
 import { durationObjToString } from "./durationObjToString";
 import { humanize } from "./humanize";
 import { normalize } from "./normalize";
@@ -25,5 +25,11 @@ export class IsoDuration {
   public normalize(date?: Date): IsoDuration {
     this.durationObj = normalize(this.durationObj, date);
     return this;
+  }
+
+  public isEmpty(): boolean {
+    return Object.keys(this.durationObj).every(
+      key => this.durationObj[key as DurationUnit] === 0
+    );
   }
 }
