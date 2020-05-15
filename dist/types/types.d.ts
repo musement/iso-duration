@@ -6,7 +6,10 @@ declare type DurationObj = {
 interface Locales {
     [key: string]: LangConfig;
 }
+interface LocalesOptions {
+    fallbackLocale?: string;
+}
 interface HumanizeConfig {
     largest?: number;
 }
-export { DurationUnit, DurationObj, Locales, HumanizeConfig };
+export { DurationUnit, DurationObj, Locales, HumanizeConfig, LocalesOptions };

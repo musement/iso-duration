@@ -58,8 +58,9 @@ describe("isoDuration.setLocales", () => {
     const fakeLangConfig: any = {
       lang: "fake config"
     };
+    const options = {};
 
-    isoDuration.setLocales(fakeLangConfig);
-    expect(config.setLocales).toHaveBeenCalledWith(fakeLangConfig);
+    isoDuration.setLocales(fakeLangConfig, options);
+    expect(config.setLocales).toHaveBeenCalledWith(fakeLangConfig, options);
   });
 });

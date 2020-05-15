@@ -1,22 +1,30 @@
 import { LangConfig } from "./locales/types";
-import { Locales } from "./types";
+import { Locales, LocalesOptions } from "./types";
 
 interface Config {
   locales: Locales;
-  setLocales: (T: Locales) => void;
+  options: LocalesOptions;
+  setLocales: (T: Locales, options?: LocalesOptions) => void;
   getLangConfig: (T: string) => LangConfig;
 }
 
 const config: Config = {
   locales: {},
-  setLocales(locales) {
+  options: {},
+  setLocales(locales, options) {
     this.locales = {
       ...this.locales,
       ...locales
     };
+    if (options) {
+      this.options = { ...this.options, ...options };
+    }
   },
-  getLangConfig(lang) {
-    const localesConfig = this.locales[lang];
+  getLangConfig(lang: string) {
+    let localesConfig = this.locales[lang];
+    if (!localesConfig && this.options.fallbackLocale) {
+      localesConfig = this.locales[this.options.fallbackLocale];
+    }
     if (!localesConfig) {
       throw new Error(
         `isoDuration: Translations for language: ${lang} are not provided`
