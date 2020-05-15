@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.7...v0.0.8) (2020-05-15)
+
+
+### Features
+
+* add fallbackLocale option ([1b8e34c](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/commit/1b8e34c1129bb64d506fc7b5b00466fe4a94e7fe))
+* handle durations of 0 seconds ([567bb58](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/commit/567bb5838ac70eb4a5bb33c637322fdbc539b628))
+
 ### [0.0.7](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.6...v0.0.7) (2020-05-05)
 
 ### [0.0.6](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.5...v0.0.6) (2020-05-05)
