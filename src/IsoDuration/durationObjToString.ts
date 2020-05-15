@@ -39,6 +39,10 @@ const durationObjToString = (durationObj: DurationObj): string => {
       durationIsoString += `T${isoTimeElement}`;
     }
 
+    if (!isoDateElement && !isoTimeElement) {
+      durationIsoString += "0D";
+    }
+
     return durationIsoString;
   }
 };

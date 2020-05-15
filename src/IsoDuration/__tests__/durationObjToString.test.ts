@@ -59,5 +59,7 @@ describe("durationObjToString", () => {
         seconds: 8
       })
     ).toEqual("PT8S");
+
+    expect(durationObjToString(durationZero)).toEqual("P0D");
   });
 });

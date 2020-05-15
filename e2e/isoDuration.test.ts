@@ -26,6 +26,10 @@ describe("isoDuration", () => {
         "1 year 2 months 3 days 4 hours 5 minutes 6.5 seconds"
       );
     });
+
+    it("isEmpty should return 'false'", () => {
+      expect(duration.isEmpty()).toBe(false);
+    });
   });
 
   describe("when duration is created from an Object", () => {
@@ -68,6 +72,38 @@ describe("isoDuration", () => {
       expect(duration.humanize("en", { largest: 3 })).toEqual(
         "1 year 2 months 3 days"
       );
+    });
+
+    it("isEmpty should return 'false'", () => {
+      expect(duration.isEmpty()).toBe(false);
+    });
+  });
+
+  describe("when duration represents a 0 seconds duration", () => {
+    const duration = isoDuration("P0D");
+
+    it("parse method should return valid object", () => {
+      expect(duration.parse()).toEqual({
+        weeks: 0,
+        years: 0,
+        months: 0,
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      });
+    });
+
+    it("toString string should return valid ISO string", () => {
+      expect(duration.toString()).toEqual("P0D");
+    });
+
+    it("humanize should return an empty string", () => {
+      expect(duration.humanize("en")).toEqual("");
+    });
+
+    it("isEmpty should return 'true'", () => {
+      expect(duration.isEmpty()).toBe(true);
     });
   });
 

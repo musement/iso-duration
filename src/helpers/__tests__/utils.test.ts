@@ -42,6 +42,10 @@ describe("parseIsoString", () => {
         ...durationZero,
         years: 1.5
       });
+
+      expect(parseIsoString("P0Y0D")).toEqual({
+        ...durationZero
+      });
     });
   });
 
