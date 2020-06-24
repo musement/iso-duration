@@ -78,7 +78,7 @@ describe("normalizeDurationObj", () => {
   });
 
   describe("when partial duration contains weeks", () => {
-    it("should return object only with weeks", () => {
+    it("should return object only with weeks for weeks > 0", () => {
       expect(normalizeDurationObj({ weeks: 1, days: 5 })).toEqual({
         ...durationZero,
         weeks: 1
@@ -87,6 +87,13 @@ describe("normalizeDurationObj", () => {
       expect(normalizeDurationObj({ weeks: 10 })).toEqual({
         ...durationZero,
         weeks: 10
+      });
+    });
+
+    it("should return object without with weeks for weeks == 0", () => {
+      expect(normalizeDurationObj({ weeks: 0, days: 5 })).toEqual({
+        ...durationZero,
+        days: 5
       });
     });
   });

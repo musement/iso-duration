@@ -84,7 +84,7 @@ var parseIsoString = function (durationString) {
  * @param partialDurationObj
  */
 var normalizeDurationObj = function (partialDurationObj) {
-    if (Object.prototype.hasOwnProperty.call(partialDurationObj, "weeks")) {
+    if (partialDurationObj.weeks && partialDurationObj.weeks > 0) {
         return Object.assign({}, durationZero, { weeks: partialDurationObj.weeks });
     }
     return durationKeys.reduce(function (res, key) {

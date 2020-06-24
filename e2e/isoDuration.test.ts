@@ -126,4 +126,28 @@ describe("isoDuration", () => {
       expect(() => duration.humanize("not_included_lang")).toThrow(Error);
     });
   });
+
+  describe("when value returned from parse method is used to create new duration", () => {
+    it("should return the same object after 2nd parse - PnYnMnDTnHnMnS format", () => {
+      const duration = isoDuration({
+        weeks: 0,
+        months: 5
+      });
+
+      const firstParse = duration.parse();
+      const secondParse = isoDuration(firstParse).parse();
+      expect(firstParse).toEqual(secondParse);
+    });
+
+    it("should return the same object after 2nd parse - PnW format", () => {
+      const duration = isoDuration({
+        weeks: 3,
+        months: 0
+      });
+
+      const firstParse = duration.parse();
+      const secondParse = isoDuration(firstParse).parse();
+      expect(firstParse).toEqual(secondParse);
+    });
+  });
 });

@@ -24,7 +24,7 @@ const parseIsoString = (durationString: string): DurationObj => {
 const normalizeDurationObj = (
   partialDurationObj: Partial<DurationObj>
 ): DurationObj => {
-  if (Object.prototype.hasOwnProperty.call(partialDurationObj, "weeks")) {
+  if (partialDurationObj.weeks && partialDurationObj.weeks > 0) {
     return Object.assign({}, durationZero, { weeks: partialDurationObj.weeks });
   }
 
