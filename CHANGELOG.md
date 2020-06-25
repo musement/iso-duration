@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.8...v0.0.9) (2020-06-25)
+
+
+### Bug Fixes
+
+* check if weeks is grater then 0 before using weeks format ([79476b5](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/commit/79476b56199d1e6f0b805c3a08f12d27f5315cdc))
+
 ### [0.0.8](https://gitlab.com/musement/frontend-shared/domain-content/iso-duration/compare/v0.0.7...v0.0.8) (2020-05-15)
 
 
