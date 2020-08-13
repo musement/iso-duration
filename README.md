@@ -1,6 +1,10 @@
 ## @musement/iso-duration
 
-#### Instalation: 
+JS's library created to provide easy API for working with time duration.  
+Based on ISO 8601.  
+Inspired by [HumanizeDuration](https://github.com/EvanHahn/HumanizeDuration.js) and [ISO8601-duration](https://github.com/tolu/ISO8601-duration).
+
+#### Installation: 
 ```
 npm i @musement/iso-duration --save
 ```
@@ -80,7 +84,7 @@ const durationFromObj = isoDuration({
 
 ### i18n
 All languages which are expected to be available in `.humanize` method needs to be loaded using `isoDuration.setLocales`
-function.Currently library provides support for languages listed under `/src/locales`
+function. Currently, library provides support for languages listed under `/src/locales`.
 
 ```
 import { isoDuration, en, pl, it } from '@musement/iso-duration'
@@ -171,3 +175,7 @@ Month with 29 days:
 console.log("Duration:", isoDuration("P31D").normalize(new Date(2020, 1, 1)).humanize('en'))
 //Duration: 1 month 2 days
 ```
+
+### Credits
+[EvanHahn](https://github.com/EvanHahn) - author of [HumanizeDuration](https://github.com/EvanHahn/HumanizeDuration.js)  
+[tolu](https://github.com/tolu) author of [ISO8601-duration](https://github.com/tolu/ISO8601-duration)

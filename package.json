@@ -22,7 +22,22 @@
   ],
   "author": "Musement",
   "contributors": [
-    "Przemysław Fałowski <przemyslaw.falowski@musement.com>"
+    "Przemysław Fałowski <przemyslaw.falowski@musement.com>",
+    "Marco Ziliani <marco.ziliani@musement.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musement/iso-duration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/musement/iso-duration/issues"
+  },
+  "keywords": [
+    "iso",
+    "duration",
+    "iso8601",
+    "humanize",
+    "time"
   ],
   "license": "ISC",
   "devDependencies": {
