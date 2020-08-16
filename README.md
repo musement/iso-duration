@@ -123,7 +123,7 @@ console.log(isoDuration("P8T30M").parse())
 
 * `toString()` returns ISO_8601 string:
 ```
-console.log(isoDuration("P8T30M").parse())
+console.log(isoDuration("P8T30M").toString())
 // P8T30M
 ```
 
