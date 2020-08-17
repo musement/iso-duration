@@ -86,7 +86,7 @@ const durationFromObj = isoDuration({
 All languages which are expected to be available in `.humanize` method needs to be loaded using `isoDuration.setLocales`
 function. Currently, library provides support for languages listed under `/src/locales`.
 
-```
+```js
 import { isoDuration, en, pl, it } from '@musement/iso-duration'
 
 isoDuration.setLocales({
@@ -108,7 +108,7 @@ isoDuration.setLocales({
 
 ### IsoDuration object:
 * `parse()` return `DurationObj` with all time periods represented as JS object
-```
+```js
 console.log(isoDuration("P8T30M").parse())
 // {
 //   weeks: 0,
@@ -122,26 +122,26 @@ console.log(isoDuration("P8T30M").parse())
 ```
 
 * `toString()` returns ISO_8601 string:
-```
+```js
 console.log(isoDuration("P8T30M").toString())
 // P8T30M
 ```
 
 * `humanize(lang: string, config?: HumanizeConfig)` returns duration in human readable way:   
 ⚠ Warning ️⚠ - used `lang` needs to be previously added to the library using `isoDuration.setLocales`
-```
+```js
 console.log(isoDuration("P8T30M").humanize('en'))
 // 8 hours 30 minutes
 ```
 
 `HumanizeConfig` Object:
-```
+```js
 {
   largest: number
 }
 ```
 `largest` - Reduce number of humanized to N the largest units:
-```
+```js
 console.log(
   isoDuration({
     years: 2,
@@ -156,7 +156,7 @@ console.log(
 ```
 
 * `normalize(date?: Date)` returns normalized IsoDuration object:
-```
+```js
 console.log(isoDuration("PT90M").normalize().parse())
 // PT1H30M
 ```
@@ -165,13 +165,13 @@ This method takes an optional argument `date` which defines start of duration. I
 If it's not present normalize function will use current date (`new Date()`) instead.
 
 Month with 31 days:
-```
+```js
 console.log("Duration:", isoDuration("P31D").normalize(new Date(2020, 0, 1)).humanize('en'))
 //Duration: 31 days
 ```
 
 Month with 29 days:
-```
+```js
 console.log("Duration:", isoDuration("P31D").normalize(new Date(2020, 1, 1)).humanize('en'))
 //Duration: 1 month 2 days
 ```
