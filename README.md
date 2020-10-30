@@ -17,11 +17,16 @@ import { isoDuration, en, pl, it } from '@musement/iso-duration'
 // Setup locales
 //   key - string you want to use in `humanize` function
 //   value - IsoDuration i18n object.
-isoDuration.setLocales({
-  en,
-  pl,
-  it,
-})
+isoDuration.setLocales(
+  {
+    en,
+    pl,
+    it,
+  },
+  {
+    fallbackLocale: 'en',
+  }
+)
 
 //Create duration object
 const duration = isoDuration("P8DT30M")
