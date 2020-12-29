@@ -41,8 +41,8 @@
   ],
   "license": "ISC",
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/jest": "^25.1.0",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
@@ -58,8 +58,8 @@
     "rollup": "^2.1.0",
     "rollup-plugin-analyzer": "^3.2.2",
     "rollup-plugin-typescript2": "^0.26.0",
-    "standard-version": "^8.0.1",
-    "ts-jest": "^25.2.1",
+    "standard-version": "^9.0.0",
+    "ts-jest": "^25.5.1",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   },
