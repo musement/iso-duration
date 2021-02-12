@@ -29,7 +29,7 @@ export class IsoDuration {
 
   public isEmpty(): boolean {
     return Object.keys(this.durationObj).every(
-      key => this.durationObj[key as DurationUnit] === 0
+      (key) => this.durationObj[key as DurationUnit] === 0
     );
   }
 }

@@ -19,7 +19,7 @@ const humanizeDate = (
     "days",
     "hours",
     "minutes",
-    "seconds"
+    "seconds",
   ];
 
   let numOfHumanizedUnits = 0;
@@ -51,7 +51,7 @@ const humanize = (
   durationObj: DurationObj,
   lang: string,
   humanizeConfig?: HumanizeConfig
-) => {
+): string => {
   if (durationObj.weeks > 0) {
     return humanizeWeek(durationObj, lang);
   } else {

@@ -11,10 +11,14 @@ const parseIsoString = (durationString: string): DurationObj => {
     throw new Error("Invalid duration string");
   }
 
-  return durationMatchedPattern.slice(1).reduce((prev: any, next, idx) => {
-    prev[durationKeys[idx]] = parseFloat(next) || 0;
-    return prev;
-  }, {});
+  const parsed = durationMatchedPattern
+    .slice(1)
+    .reduce((prev: Partial<DurationObj>, next, idx) => {
+      prev[durationKeys[idx]] = parseFloat(next) || 0;
+      return prev;
+    }, {});
+
+  return parsed as DurationObj;
 };
 
 /** Normalize not completed Partial DurationObj to DurationObj;
@@ -31,7 +35,7 @@ const normalizeDurationObj = (
   return durationKeys.reduce<DurationObj>(
     (res, key) => ({
       ...res,
-      [key]: partialDurationObj[key] || 0
+      [key]: partialDurationObj[key] || 0,
     }),
     {} as DurationObj
   );

@@ -9,7 +9,7 @@ import { durationObjToString } from "../durationObjToString";
 describe("IsoDuration", () => {
   const durationConfig = {
     ...durationZero,
-    days: 5
+    days: 5,
   };
 
   const isoDurationObj = new IsoDuration(durationConfig);
@@ -29,7 +29,7 @@ describe("IsoDuration", () => {
 
     isoDurationObj.humanize("pl", { largest: 2 });
     expect(humanize).toHaveBeenLastCalledWith(durationConfig, "pl", {
-      largest: 2
+      largest: 2,
     });
   });
 });

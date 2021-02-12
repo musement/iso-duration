@@ -23,7 +23,7 @@ const lang: LangConfig = {
   seconds(c) {
     return ["sekunda", "sekundy", "sekundy", "sekund"][getCzechOrSlovakForm(c)];
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

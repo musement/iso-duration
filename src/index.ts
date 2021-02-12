@@ -10,7 +10,7 @@ function isoDuration(duration: string | Partial<DurationObj>): IsoDuration {
   return new IsoDuration(normalizeDurationObj(duration));
 }
 
-isoDuration.setLocales = function(
+isoDuration.setLocales = function (
   obj: Locales,
   options?: LocalesOptions
 ): void {

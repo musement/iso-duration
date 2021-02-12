@@ -22,7 +22,7 @@ const lang: LangConfig = {
   seconds(c) {
     return "sekúnd" + (c === 1 ? "a" : "ur");
   },
-  decimal: "."
+  decimal: ".",
 };
 
 export default lang;

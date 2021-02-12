@@ -12,7 +12,7 @@ describe("normalize", () => {
     ).toEqual({
       ...durationZero,
       minutes: 1,
-      seconds: 30
+      seconds: 30,
     });
 
     expect(
@@ -20,7 +20,7 @@ describe("normalize", () => {
     ).toEqual({
       ...durationZero,
       hours: 1,
-      minutes: 30
+      minutes: 30,
     });
 
     expect(
@@ -28,7 +28,7 @@ describe("normalize", () => {
     ).toEqual({
       ...durationZero,
       days: 1,
-      hours: 6
+      hours: 6,
     });
 
     expect(
@@ -36,7 +36,7 @@ describe("normalize", () => {
     ).toEqual({
       ...durationZero,
       months: 1,
-      days: 9
+      days: 9,
     });
 
     expect(
@@ -44,7 +44,7 @@ describe("normalize", () => {
     ).toEqual({
       ...durationZero,
       years: 1,
-      months: 6
+      months: 6,
     });
 
     expect(
@@ -56,7 +56,7 @@ describe("normalize", () => {
           days: 50,
           hours: 30,
           minutes: 120,
-          seconds: 90
+          seconds: 90,
         },
         new Date(2020, 0, 1)
       )
@@ -67,7 +67,7 @@ describe("normalize", () => {
       days: 20,
       hours: 8,
       minutes: 1,
-      seconds: 30
+      seconds: 30,
     });
   });
 
@@ -77,7 +77,7 @@ describe("normalize", () => {
         normalize({ ...durationZero, days: 31 }, new Date(2020, 0, 1))
       ).toEqual({
         ...durationZero,
-        days: 31
+        days: 31,
       });
 
       expect(
@@ -85,7 +85,7 @@ describe("normalize", () => {
       ).toEqual({
         ...durationZero,
         months: 1,
-        days: 2
+        days: 2,
       });
 
       expect(
@@ -93,7 +93,7 @@ describe("normalize", () => {
       ).toEqual({
         ...durationZero,
         months: 1,
-        days: 3
+        days: 3,
       });
 
       expect(
@@ -101,7 +101,7 @@ describe("normalize", () => {
       ).toEqual({
         ...durationZero,
         months: 1,
-        days: 1
+        days: 1,
       });
     });
   });

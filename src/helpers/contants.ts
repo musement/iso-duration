@@ -23,7 +23,7 @@ const durationKeys: DurationUnit[] = [
   "days",
   "hours",
   "minutes",
-  "seconds"
+  "seconds",
 ];
 
 const durationUnitToIsoKey: Record<DurationUnit, string> = {
@@ -33,7 +33,7 @@ const durationUnitToIsoKey: Record<DurationUnit, string> = {
   hours: "H",
   minutes: "M",
   seconds: "S",
-  weeks: "W"
+  weeks: "W",
 };
 
 const durationZero: DurationObj = Object.freeze({
@@ -43,7 +43,7 @@ const durationZero: DurationObj = Object.freeze({
   days: 0,
   hours: 0,
   minutes: 0,
-  seconds: 0
+  seconds: 0,
 });
 
 export { pattern, durationKeys, durationUnitToIsoKey, durationZero };

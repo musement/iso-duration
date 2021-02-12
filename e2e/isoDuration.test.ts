@@ -13,7 +13,7 @@ describe("isoDuration", () => {
         days: 3,
         hours: 4,
         minutes: 5,
-        seconds: 6.5
+        seconds: 6.5,
       });
     });
 
@@ -39,7 +39,7 @@ describe("isoDuration", () => {
       days: 3,
       hours: 4,
       minutes: 5,
-      seconds: 6.5
+      seconds: 6.5,
     });
 
     it("parse method should return valid object", () => {
@@ -50,7 +50,7 @@ describe("isoDuration", () => {
         days: 3,
         hours: 4,
         minutes: 5,
-        seconds: 6.5
+        seconds: 6.5,
       });
     });
 
@@ -90,7 +90,7 @@ describe("isoDuration", () => {
         days: 0,
         hours: 0,
         minutes: 0,
-        seconds: 0
+        seconds: 0,
       });
     });
 
@@ -131,7 +131,7 @@ describe("isoDuration", () => {
     it("should return the same object after 2nd parse - PnYnMnDTnHnMnS format", () => {
       const duration = isoDuration({
         weeks: 0,
-        months: 5
+        months: 5,
       });
 
       const firstParse = duration.parse();
@@ -142,7 +142,7 @@ describe("isoDuration", () => {
     it("should return the same object after 2nd parse - PnW format", () => {
       const duration = isoDuration({
         weeks: 3,
-        months: 0
+        months: 0,
       });
 
       const firstParse = duration.parse();

@@ -23,7 +23,7 @@ const lang: LangConfig = {
   seconds(c) {
     return ["sekunde", "sekundes"][getLatvianForm(c)];
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

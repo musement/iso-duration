@@ -22,7 +22,7 @@ const lang: LangConfig = {
   seconds() {
     return "초";
   },
-  decimal: "."
+  decimal: ".",
 };
 
 export default lang;

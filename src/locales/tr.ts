@@ -22,7 +22,7 @@ const lang: LangConfig = {
   seconds() {
     return "saniye";
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

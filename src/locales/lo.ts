@@ -22,7 +22,7 @@ const lang: LangConfig = {
   seconds() {
     return "ວິນາທີ";
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

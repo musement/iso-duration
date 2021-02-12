@@ -6,18 +6,18 @@ export default {
   input: "src/index.ts",
   plugins: [
     typescript({
-      useTsconfigDeclarationDir: true
+      useTsconfigDeclarationDir: true,
     }),
-    analyze({ stdout: true })
+    analyze({ stdout: true }),
   ],
   output: [
     {
       file: pkg.module,
-      format: `esm`
+      format: `esm`,
     },
     {
       file: pkg.main,
-      format: `cjs`
-    }
-  ]
+      format: `cjs`,
+    },
+  ],
 };

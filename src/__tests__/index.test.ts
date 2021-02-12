@@ -31,7 +31,7 @@ describe("isoDuration", () => {
 
   describe("when isoDuration is called with an object", () => {
     const durationObj = {
-      days: 1
+      days: 1,
     };
 
     beforeAll(() => {
@@ -56,7 +56,7 @@ describe("isoDuration", () => {
 describe("isoDuration.setLocales", () => {
   it("when isoDuration is called with String", () => {
     const fakeLangConfig: any = {
-      lang: "fake config"
+      lang: "fake config",
     };
     const options = {};
 
