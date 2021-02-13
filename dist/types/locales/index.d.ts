@@ -37,4 +37,4 @@ import ur from "./ur";
 import vi from "./vi";
 import zhCN from "./zhCN";
 import zhTW from "./zhTW";
-export { ar, bg, ca, cs, da, de, en, es, et, fa, fi, fo, fr, gr, he, hr, hu, is, it, ja, ko, lo, lt, lv, ms, nl, no, pl, pt, ro, ru, sk, sv, tr, uk, ur, vi, zhCN, zhTW };
+export { ar, bg, ca, cs, da, de, en, es, et, fa, fi, fo, fr, gr, he, hr, hu, is, it, ja, ko, lo, lt, lv, ms, nl, no, pl, pt, ro, ru, sk, sv, tr, uk, ur, vi, zhCN, zhTW, };

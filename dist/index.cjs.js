@@ -48,7 +48,7 @@ var durationKeys = [
     "days",
     "hours",
     "minutes",
-    "seconds"
+    "seconds",
 ];
 var durationUnitToIsoKey = {
     years: "Y",
@@ -57,7 +57,7 @@ var durationUnitToIsoKey = {
     hours: "H",
     minutes: "M",
     seconds: "S",
-    weeks: "W"
+    weeks: "W",
 };
 var durationZero = Object.freeze({
     weeks: 0,
@@ -66,7 +66,7 @@ var durationZero = Object.freeze({
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
 });
 
 /** Parse PnYnMnDTnHnMnS format to object
@@ -78,10 +78,13 @@ var parseIsoString = function (durationString) {
     if (!durationMatchedPattern) {
         throw new Error("Invalid duration string");
     }
-    return durationMatchedPattern.slice(1).reduce(function (prev, next, idx) {
+    var parsed = durationMatchedPattern
+        .slice(1)
+        .reduce(function (prev, next, idx) {
         prev[durationKeys[idx]] = parseFloat(next) || 0;
         return prev;
     }, {});
+    return parsed;
 };
 /** Normalize not completed Partial DurationObj to DurationObj;
  * ex: { days: 1, not_supported_key: 'bar' } => { years: 0, months: 0 days: 1, hours: 0, minutes: 0, seconds: 0 }
@@ -115,7 +118,7 @@ var config = {
             throw new Error("isoDuration: Translations for language: " + lang + " are not provided");
         }
         return localesConfig;
-    }
+    },
 };
 
 var getIsoDateElements = function (durationObj) {
@@ -174,7 +177,7 @@ var humanizeDate = function (durationObj, lang, humanizeConfig) {
         "days",
         "hours",
         "minutes",
-        "seconds"
+        "seconds",
     ];
     var numOfHumanizedUnits = 0;
     for (var index = 0; index < humanizeOrder.length; index++) {
@@ -209,13 +212,13 @@ var normalizeOrder = [
     "minutes",
     "hours",
     "days",
-    "months"
+    "months",
 ];
 var getNormalizer = function (maxValue) {
     return function (val) {
         return {
             nextUnitValue: Math.floor(val / maxValue),
-            value: val % maxValue
+            value: val % maxValue,
         };
     };
 };
@@ -239,10 +242,10 @@ var unitNormalizer = {
         }
         return {
             nextUnitValue: fullMonths,
-            value: days
+            value: days,
         };
     },
-    months: getNormalizer(12)
+    months: getNormalizer(12),
 };
 var normalize = function (duration, date) {
     var normalizedDuration = __assign({}, duration);
@@ -318,7 +321,7 @@ var lang = {
     seconds: function (c) {
         return c === 1 ? "ثانية" : "ثواني";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 function getSlavicForm(c) {
@@ -363,7 +366,7 @@ var lang$1 = {
     seconds: function (c) {
         return ["секунди", "секунда", "секунди"][getSlavicForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$2 = {
@@ -388,7 +391,7 @@ var lang$2 = {
     seconds: function (c) {
         return "segon" + (c === 1 ? "" : "s");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 function getCzechOrSlovakForm(c) {
@@ -428,7 +431,7 @@ var lang$3 = {
     seconds: function (c) {
         return ["sekunda", "sekundy", "sekundy", "sekund"][getCzechOrSlovakForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$4 = {
@@ -453,7 +456,7 @@ var lang$4 = {
     seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "er");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$5 = {
@@ -478,7 +481,7 @@ var lang$5 = {
     seconds: function (c) {
         return "Sekunde" + (c === 1 ? "" : "n");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$6 = {
@@ -503,7 +506,7 @@ var lang$6 = {
     seconds: function (c) {
         return "second" + (c === 1 ? "" : "s");
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$7 = {
@@ -528,7 +531,7 @@ var lang$7 = {
     seconds: function (c) {
         return "segundo" + (c === 1 ? "" : "s");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$8 = {
@@ -553,7 +556,7 @@ var lang$8 = {
     seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "it");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$9 = {
@@ -578,7 +581,7 @@ var lang$9 = {
     seconds: function () {
         return "ثانیه";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$a = {
@@ -603,7 +606,7 @@ var lang$a = {
     seconds: function (c) {
         return "sekunti" + (c === 1 ? "" : "a");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$b = {
@@ -628,7 +631,7 @@ var lang$b = {
     seconds: function () {
         return "sekund";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$c = {
@@ -653,7 +656,7 @@ var lang$c = {
     seconds: function (c) {
         return "seconde" + (c >= 2 ? "s" : "");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$d = {
@@ -678,7 +681,7 @@ var lang$d = {
     seconds: function (c) {
         return c === 1 ? "δευτερόλεπτο" : "δευτερόλεπτα";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$e = {
@@ -703,7 +706,7 @@ var lang$e = {
     seconds: function (c) {
         return c === 1 ? "שניה" : "שניות";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$f = {
@@ -768,7 +771,7 @@ var lang$f = {
         }
         return "sekundi";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$g = {
@@ -793,7 +796,7 @@ var lang$g = {
     seconds: function () {
         return "másodperc";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$h = {
@@ -818,7 +821,7 @@ var lang$h = {
     seconds: function (c) {
         return "sekúnd" + (c === 1 ? "a" : "ur");
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$i = {
@@ -843,7 +846,7 @@ var lang$i = {
     seconds: function (c) {
         return "second" + (c === 1 ? "o" : "i");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$j = {
@@ -868,7 +871,7 @@ var lang$j = {
     seconds: function () {
         return "秒";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$k = {
@@ -893,7 +896,7 @@ var lang$k = {
     seconds: function () {
         return "초";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$l = {
@@ -918,7 +921,7 @@ var lang$l = {
     seconds: function () {
         return "ວິນາທີ";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 function getLithuanianForm(c) {
@@ -957,7 +960,7 @@ var lang$m = {
     seconds: function (c) {
         return ["sekundė", "sekundės", "sekundžių"][getLithuanianForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 function getLatvianForm(c) {
@@ -991,7 +994,7 @@ var lang$n = {
     seconds: function (c) {
         return ["sekunde", "sekundes"][getLatvianForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$o = {
@@ -1016,7 +1019,7 @@ var lang$o = {
     seconds: function () {
         return "saat";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$p = {
@@ -1041,7 +1044,7 @@ var lang$p = {
     seconds: function (c) {
         return c === 1 ? "seconde" : "seconden";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$q = {
@@ -1066,7 +1069,7 @@ var lang$q = {
     seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "er");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 function getPolishForm(c) {
@@ -1106,7 +1109,7 @@ var lang$r = {
     seconds: function (c) {
         return ["sekunda", "sekundy", "sekundy", "sekund"][getPolishForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$s = {
@@ -1131,7 +1134,7 @@ var lang$s = {
     seconds: function (c) {
         return "segundo" + (c === 1 ? "" : "s");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$t = {
@@ -1156,7 +1159,7 @@ var lang$t = {
     seconds: function (c) {
         return c === 1 ? "secundă" : "secunde";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$u = {
@@ -1181,7 +1184,7 @@ var lang$u = {
     seconds: function (c) {
         return ["секунд", "секунда", "секунды"][getSlavicForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$v = {
@@ -1206,7 +1209,7 @@ var lang$v = {
     seconds: function (c) {
         return ["sekunda", "sekundy", "sekundy", "sekúnd"][getCzechOrSlovakForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$w = {
@@ -1231,7 +1234,7 @@ var lang$w = {
     seconds: function (c) {
         return "sekund" + (c === 1 ? "" : "er");
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$x = {
@@ -1256,7 +1259,7 @@ var lang$x = {
     seconds: function () {
         return "saniye";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$y = {
@@ -1281,7 +1284,7 @@ var lang$y = {
     seconds: function (c) {
         return ["секунд", "секунда", "секунди"][getSlavicForm(c)];
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$z = {
@@ -1306,7 +1309,7 @@ var lang$z = {
     seconds: function () {
         return "سیکنڈ";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$A = {
@@ -1331,7 +1334,7 @@ var lang$A = {
     seconds: function () {
         return "giây";
     },
-    decimal: ","
+    decimal: ",",
 };
 
 var lang$B = {
@@ -1356,7 +1359,7 @@ var lang$B = {
     seconds: function () {
         return "秒";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 var lang$C = {
@@ -1381,7 +1384,7 @@ var lang$C = {
     seconds: function () {
         return "秒";
     },
-    decimal: "."
+    decimal: ".",
 };
 
 function isoDuration(duration) {
