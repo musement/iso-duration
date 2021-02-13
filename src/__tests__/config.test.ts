@@ -2,11 +2,11 @@ import config from "../config";
 
 const mocks = {
   fakeEnglishConfig: {
-    foo: "bar"
+    weeks: "bar",
   },
   fakePolishConfig: {
-    foo: "bar bar"
-  }
+    weeks: "bar bar",
+  },
 };
 describe("config", () => {
   describe("when new locales are added", () => {

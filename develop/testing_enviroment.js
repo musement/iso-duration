@@ -5,7 +5,7 @@ isoDuration.setLocales({
   pl: pl,
   en: en,
   it: it,
-  pt: pl
+  pt: pl,
 });
 
 const test = isoDuration("P10Y3DT4H5M6.5S");

@@ -6,17 +6,17 @@ describe("parseIsoString", () => {
     it("should return object only with weeks", () => {
       expect(parseIsoString("P1W")).toEqual({
         ...durationZero,
-        weeks: 1
+        weeks: 1,
       });
 
       expect(parseIsoString("P8W")).toEqual({
         ...durationZero,
-        weeks: 8
+        weeks: 8,
       });
 
       expect(parseIsoString("P1.5W")).toEqual({
         ...durationZero,
-        weeks: 1.5
+        weeks: 1.5,
       });
     });
   });
@@ -30,21 +30,21 @@ describe("parseIsoString", () => {
         days: 4,
         hours: 12,
         minutes: 30,
-        seconds: 5
+        seconds: 5,
       });
 
       expect(parseIsoString("PT100S")).toEqual({
         ...durationZero,
-        seconds: 100
+        seconds: 100,
       });
 
       expect(parseIsoString("P1.5Y")).toEqual({
         ...durationZero,
-        years: 1.5
+        years: 1.5,
       });
 
       expect(parseIsoString("P0Y0D")).toEqual({
-        ...durationZero
+        ...durationZero,
       });
     });
   });
@@ -64,7 +64,7 @@ describe("normalizeDurationObj", () => {
     expect(normalizeDurationObj({ months: 1, days: 10 })).toEqual({
       ...durationZero,
       months: 1,
-      days: 10
+      days: 10,
     });
   });
 
@@ -72,7 +72,7 @@ describe("normalizeDurationObj", () => {
     it("should drop those keys from the final object", () => {
       expect(normalizeDurationObj({ days: 5, foo: "bar" } as any)).toEqual({
         ...durationZero,
-        days: 5
+        days: 5,
       });
     });
   });
@@ -81,19 +81,19 @@ describe("normalizeDurationObj", () => {
     it("should return object only with weeks for weeks > 0", () => {
       expect(normalizeDurationObj({ weeks: 1, days: 5 })).toEqual({
         ...durationZero,
-        weeks: 1
+        weeks: 1,
       });
 
       expect(normalizeDurationObj({ weeks: 10 })).toEqual({
         ...durationZero,
-        weeks: 10
+        weeks: 10,
       });
     });
 
     it("should return object without with weeks for weeks == 0", () => {
       expect(normalizeDurationObj({ weeks: 0, days: 5 })).toEqual({
         ...durationZero,
-        days: 5
+        days: 5,
       });
     });
   });

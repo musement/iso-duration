@@ -7,6 +7,6 @@ module.exports = {
   prettierPath: "<rootDir>/node_modules/prettier",
   transform: {
     "^.+\\.ts?$": "ts-jest",
-    "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest"
-  }
+    "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+  },
 };

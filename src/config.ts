@@ -14,7 +14,7 @@ const config: Config = {
   setLocales(locales, options) {
     this.locales = {
       ...this.locales,
-      ...locales
+      ...locales,
     };
     if (options) {
       this.options = { ...this.options, ...options };
@@ -31,7 +31,7 @@ const config: Config = {
       );
     }
     return localesConfig;
-  }
+  },
 };
 
 export default config;

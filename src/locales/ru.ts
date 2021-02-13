@@ -23,7 +23,7 @@ const lang: LangConfig = {
   seconds(c) {
     return ["секунд", "секунда", "секунды"][getSlavicForm(c)];
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

@@ -77,5 +77,5 @@ export {
   ur,
   vi,
   zhCN,
-  zhTW
+  zhTW,
 };

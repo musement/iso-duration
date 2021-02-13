@@ -60,7 +60,7 @@ const lang: LangConfig = {
     }
     return "sekundi";
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

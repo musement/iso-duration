@@ -22,7 +22,7 @@ const lang: LangConfig = {
   seconds() {
     return "giây";
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;

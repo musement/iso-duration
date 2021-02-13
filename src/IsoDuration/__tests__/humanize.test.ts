@@ -8,12 +8,12 @@ const mockedLangConfig = {
   days: jest.fn(),
   hours: jest.fn(),
   minutes: jest.fn(),
-  seconds: jest.fn()
+  seconds: jest.fn(),
 };
 
 jest.mock("../../config", () => {
   return {
-    getLangConfig: jest.fn(() => mockedLangConfig)
+    getLangConfig: jest.fn(() => mockedLangConfig),
   };
 });
 import config from "../../config";
@@ -26,7 +26,7 @@ describe("humanize", () => {
   it("when humanize is called with weeks obj", () => {
     const durationObj = {
       ...durationZero,
-      weeks: 5
+      weeks: 5,
     };
     const lang = "pl";
     humanize(durationObj, lang);
@@ -39,7 +39,7 @@ describe("humanize", () => {
     const durationObj = {
       ...durationZero,
       days: 5,
-      hours: 12
+      hours: 12,
     };
     const lang = "en";
     humanize(durationObj, lang);
@@ -56,7 +56,7 @@ describe("humanize", () => {
       months: 1,
       days: 5,
       hours: 12,
-      seconds: 10
+      seconds: 10,
     };
     const lang = "en";
     humanize(durationObj, lang, { largest: 3 });

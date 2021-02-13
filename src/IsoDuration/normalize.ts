@@ -5,7 +5,7 @@ const normalizeOrder: DurationUnit[] = [
   "minutes",
   "hours",
   "days",
-  "months"
+  "months",
 ];
 
 interface NormalizedUnit {
@@ -21,7 +21,7 @@ const getNormalizer = (maxValue: number) => {
   return (val: number): NormalizedUnit => {
     return {
       nextUnitValue: Math.floor(val / maxValue),
-      value: val % maxValue
+      value: val % maxValue,
     };
   };
 };
@@ -56,10 +56,10 @@ const unitNormalizer: Normalizer = {
 
     return {
       nextUnitValue: fullMonths,
-      value: days
+      value: days,
     };
   },
-  months: getNormalizer(12)
+  months: getNormalizer(12),
 };
 
 const normalize = (duration: DurationObj, date?: Date): DurationObj => {

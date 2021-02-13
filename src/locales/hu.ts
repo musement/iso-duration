@@ -22,7 +22,7 @@ const lang: LangConfig = {
   seconds() {
     return "másodperc";
   },
-  decimal: ","
+  decimal: ",",
 };
 
 export default lang;
