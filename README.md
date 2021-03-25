@@ -162,7 +162,7 @@ console.log(
 
 * `normalize(date?: Date)` returns normalized IsoDuration object:
 ```js
-console.log(isoDuration("PT90M").normalize().parse())
+console.log(isoDuration("PT90M").normalize().toString())
 // PT1H30M
 ```
 
