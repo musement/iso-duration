@@ -214,5 +214,5 @@ console.log("Duration:", isoDuration("P31D").normalize(new Date(2020, 1, 1)).hum
 
 ### Credits
 
-[EvanHahn](https://github.com/EvanHahn) - author of [HumanizeDuration](https://github.com/EvanHahn/HumanizeDuration.js)   
-[tolu](https://github.com/tolu) author of [ISO8601-duration](
+[EvanHahn](https://github.com/EvanHahn) - author of [HumanizeDuration](https://github.com/EvanHahn/HumanizeDuration.js)  
+[tolu](https://github.com/tolu) author of [ISO8601-duration](https://github.com/tolu/ISO8601-duration)
