@@ -5,7 +5,7 @@ name: Build and test
 
 on:
   push:
-    branches: [ master, chore/add-node-tests ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
